@@ -11,7 +11,7 @@ const INITIAL_ROUTE_NAME = 'Recompensas';
 
 export default BottomTabNavigator = ({ navigation, route }) => {
 
-    navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+    navigation.setOptions({ headerTitle: getHeaderTitle(route), headerTintColor: 'red' });
 
     return (
         <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>

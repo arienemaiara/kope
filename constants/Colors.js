@@ -1,4 +1,4 @@
-const tintColor = '#D869AA';
+const tintColor = '#FF549A'; //'#D869AA';
 
 export default {
   tintColor,
@@ -11,11 +11,12 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
-  gradientStart: '#273DFF',
+  gradientStart: '#7045DB',
   gradientEnd: '#FF549A',
-  bgBtnSuccess: '#4BC250',
-  inputBorder: '#E7E7E7',
+  bgBtnSuccess: '#27AE61',
+  inputBorder: '#BDBDBD', //'#E7E7E7',
   inputBorderBottom: '#AA4BC2',
+  inputText: '#303030',
   defaultText: '#373A4D',
   grayText: '#5F5F5F',
   lightGray: '#868686',

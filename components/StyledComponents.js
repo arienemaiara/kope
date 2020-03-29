@@ -11,8 +11,8 @@ export const DefaultText = styled.Text`
 `;
 
 export const Label = styled(DefaultText)`
-    font-size: 16px;
     text-transform: uppercase;
+    margin: 10px 0;
 `;
 
 export const InfoText = styled(DefaultText)`
@@ -23,6 +23,10 @@ export const InfoText = styled(DefaultText)`
 export const Title = styled(DefaultText)`
     font-size: 24px;
     color: white;
+`;
+
+export const ListText = styled(DefaultText)`
+    font-size: 16px;
 `;
 
 
@@ -45,7 +49,8 @@ const ButtonText = styled.Text`
 export const DefaultButton = props => (
     <ButtonContainer 
         onPress={props.onPress}
-        backgroundColor={props.backgroundColor}>
+        backgroundColor={props.backgroundColor}
+        style={props.style}>
         <ButtonText>{props.title}</ButtonText>
     </ButtonContainer>
 );
@@ -63,4 +68,14 @@ export const DefaultInput = styled.TextInput`
 export const FormInput = styled(DefaultInput)`
     border-bottom-color: ${Colors.inputBorderBottom};
     border-bottom-width: 4px;
+    margin-bottom: 5px;
+`;
+
+//------------------- VIEWS ----------------------
+export const ItemLista = styled.TouchableOpacity`
+    padding: 20px;
+    border-bottom-width: 1px;
+    border-bottom-color: ${Colors.inputBorder};
+    flex-direction: row;
+    align-items: center;
 `;

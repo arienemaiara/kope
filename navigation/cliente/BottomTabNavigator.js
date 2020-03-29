@@ -7,6 +7,7 @@ import RecompensasListaScreen from '../../screens/estabelecimento/recompensas/Re
 import ResgatesScreen from '../../screens/estabelecimento/ResgatesScreen';
 import ConfiguracoesScreen from '../../screens/estabelecimento/ConfiguracoesScreen';
 import LerQRCodeScreen from '../../screens/estabelecimento/LerQRCodeScreen';
+import CadastroScreen from '../../screens/cliente/CadastroScreen';
 import Colors from '../../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
@@ -31,32 +32,32 @@ export default BottomTabNavigator = ({ navigation, route }) => {
             }}
             >
             <BottomTab.Screen
-                name="Recompensas"
-                component={RecompensasListaScreen}
+                name="Estabelecimentos"
+                component={ResgatesScreen}
                 options={{
-                    title: "Recompensas",
-                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="star" />
+                    title: "Estabelecimentos",
+                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="shopping-cart" />,
                 }}
             />
             <BottomTab.Screen
-                name="Resgates"
-                component={ResgatesScreen}
+                name="Pontos"
+                component={RecompensasListaScreen}
                 options={{
-                    title: "Resgates",
-                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="box" />,
+                    title: "Pontos",
+                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="star" />
                 }}
             />
             <BottomTab.Screen
                 name="QRCode"
                 component={LerQRCodeScreen}
                 options={{
-                    title: "Ler QRCode",
+                    title: "Mostrar QRCode",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="plus-circle" />,
                 }}
             />
             <BottomTab.Screen
                 name="Configuracoes"
-                component={ConfiguracoesScreen}
+                component={CadastroScreen}
                 options={{
                     title: "Configurações",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="settings" />,

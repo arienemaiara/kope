@@ -9,7 +9,7 @@ import {
     ScrollView
 } from 'react-native';
 
-import { FormInput, DefaultButton } from '../../../styledComponents/DefaultStyle';
+import { FormInput, DefaultButton } from '../../../components/StyledComponents';
 
 import Page from '../../../components/Page';
 import Colors from '../../../constants/Colors';
@@ -17,9 +17,9 @@ import Colors from '../../../constants/Colors';
 const RecompensasListaScreen = props => {
     return (
         <Page title='Recompensas'>
-            <Text>pagina recompensas</Text>
+            {/* <Text>pagina recompensas</Text>
             <FormInput placeholder="default input2" />
-            <DefaultButton title="Cadastrar" backgroundColor={Colors.bgBtnSuccess} />
+            <DefaultButton title="Cadastrar" backgroundColor={Colors.bgBtnSuccess} /> */}
         </Page>
     );
 }

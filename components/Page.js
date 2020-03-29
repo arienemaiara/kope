@@ -11,10 +11,10 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import Colors from '../constants/Colors';
 
-import { Title } from '../styledComponents/DefaultStyle';
+import { Title } from './StyledComponents';
 
-const HEADER_MIN_HEIGHT = 100;
-const HEADER_MAX_HEIGHT = 180;
+const HEADER_MIN_HEIGHT = 90;
+const HEADER_MAX_HEIGHT = 150;
 
 const Page = props => {
     const [scrollYAnimatedValue, setScrollYAnimatedValue] = useState(new Animated.Value(0));
@@ -32,7 +32,8 @@ const Page = props => {
                 scrollEventThrottle={10}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } }]
-                )}>
+                )}
+                >
                 {props.children}
             </ScrollView>
 
@@ -47,6 +48,7 @@ const Page = props => {
                     <Title>{props.title}</Title>
                 </LinearGradient>
             </Animated.View>
+            
         </View>
     );
 };
@@ -54,7 +56,7 @@ const Page = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     header: {
         position: 'absolute',
@@ -71,10 +73,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     pageContent: {
-        flex: 1,
-        paddingTop: 20,
-        borderRadius: 10,
-        marginTop: HEADER_MAX_HEIGHT
+        marginTop: HEADER_MAX_HEIGHT,
+        paddingBottom: HEADER_MAX_HEIGHT
     }
 });
 

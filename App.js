@@ -6,7 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import BottomTabNavigator from './navigation/estabelecimento/BottomTabNavigator';
+import EsatbelecimentoNavigator from './navigation/estabelecimento/BottomTabNavigator';
+import ClienteNavigator from './navigation/cliente/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
 const Stack = createStackNavigator();
@@ -57,7 +58,7 @@ export default function App(props) {
               headerShown: false
             }}
             >
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="Root" component={ClienteNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

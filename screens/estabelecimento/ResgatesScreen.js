@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
+import Page from '../../components/Page';
+
 const ResgatesScreen = props => {
     return (
-        <View>
-            <Text>ResgatesScreen </Text>
-        </View>
+        <Page title="Resgates">
+
+        </Page>
     );
 };
 

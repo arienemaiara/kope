@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 
 import { Title } from './StyledComponents';
 
-const HEADER_MIN_HEIGHT = 90;
+const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 150;
 
 const Page = props => {

@@ -18,7 +18,7 @@ export default {
   inputBorderBottom: '#AA4BC2',
   inputText: '#303030',
   defaultText: '#373A4D',
-  grayText: '#5F5F5F',
+  grayText: '#979797',
   lightGray: '#868686',
   redText: '#F43E3E',
   lightGreenText: '#5EB73F',

@@ -1,24 +1,51 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 
 import TabBarIcon from '../../components/TabBarIcon';
-import RecompensasListaScreen from '../../screens/estabelecimento/recompensas/RecompensasListaScreen';
-import ResgatesScreen from '../../screens/estabelecimento/ResgatesScreen';
-import ConfiguracoesScreen from '../../screens/estabelecimento/ConfiguracoesScreen';
+import ConfiguracoesScreen from '../../screens/cliente/ConfiguracoesScreen';
 import LerQRCodeScreen from '../../screens/estabelecimento/LerQRCodeScreen';
 import CadastroScreen from '../../screens/cliente/CadastroScreen';
+import EstabelecimentosScreen from '../../screens/cliente/EstabelecimentosScreen';
+import PontosScreen from '../../screens/cliente/PontosScreen';
+import ExtratoPontosScreen from '../../screens/cliente/ExtratoPontosScreen';
 import Colors from '../../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Recompensas';
+const Stack = createStackNavigator();
+const INITIAL_ROUTE_NAME = 'Estabelecimentos';
+
+function Pontos() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}>
+            <Stack.Screen name="ListaPontos" component={PontosScreen} />
+            <Stack.Screen name="ExtratoPontos" component={ExtratoPontosScreen} />
+        </Stack.Navigator>
+    )
+}
+
+function Configuracoes() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}>
+            <Stack.Screen name="Configuracoes" component={ConfiguracoesScreen} />
+            <Stack.Screen name="Cadastro" component={CadastroScreen} />
+        </Stack.Navigator>
+    )
+}
 
 export default BottomTabNavigator = ({ navigation, route }) => {
 
     navigation.setOptions({ headerTitle: getHeaderTitle(route), headerTintColor: 'red' });
 
     return (
-        <BottomTab.Navigator 
+        <BottomTab.Navigator
             initialRouteName={INITIAL_ROUTE_NAME}
             tabBarOptions={{
                 activeTintColor: Colors.tintColor,
@@ -30,10 +57,10 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                     height: 60
                 }
             }}
-            >
+        >
             <BottomTab.Screen
                 name="Estabelecimentos"
-                component={ResgatesScreen}
+                component={EstabelecimentosScreen}
                 options={{
                     title: "Estabelecimentos",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="shopping-cart" />,
@@ -41,7 +68,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
             />
             <BottomTab.Screen
                 name="Pontos"
-                component={RecompensasListaScreen}
+                component={Pontos}
                 options={{
                     title: "Pontos",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="star" />
@@ -51,13 +78,13 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                 name="QRCode"
                 component={LerQRCodeScreen}
                 options={{
-                    title: "Mostrar QRCode",
+                    title: "QR Code",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="plus-circle" />,
                 }}
             />
             <BottomTab.Screen
                 name="Configuracoes"
-                component={CadastroScreen}
+                component={Configuracoes}
                 options={{
                     title: "Configurações",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="settings" />,

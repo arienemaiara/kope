@@ -6,8 +6,9 @@ import Colors from '../constants/Colors';
 //------------------- TEXTS ----------------------
 export const DefaultText = styled.Text`
     font-family: 'circular-std';
-    font-size: 14px;
+    font-size: ${props => props.fontSize ? props.fontSize+'px' : '14px'};
     color: ${Colors.defaultText};
+    margin: 2px;
 `;
 
 export const Label = styled(DefaultText)`
@@ -21,12 +22,14 @@ export const InfoText = styled(DefaultText)`
 `;
 
 export const Title = styled(DefaultText)`
+    text-align: center;
     font-size: 24px;
     color: white;
+    width: 80%;
 `;
 
 export const ListText = styled(DefaultText)`
-    font-size: 16px;
+    font-size: 20px;
 `;
 
 
@@ -73,9 +76,11 @@ export const FormInput = styled(DefaultInput)`
 
 //------------------- VIEWS ----------------------
 export const ItemLista = styled.TouchableOpacity`
-    padding: 20px;
+    padding: 15px;
     border-bottom-width: 1px;
     border-bottom-color: ${Colors.inputBorder};
-    flex-direction: row;
-    align-items: center;
+    /* border-top-width: 1px;
+    border-top-color: ${Colors.inputBorder}; */
+    flex-direction: ${props => props.flexRow ? 'row' : 'column'};
+    align-items: flex-start;
 `;

@@ -14,7 +14,7 @@ import Page from '../../components/Page';
 import Colors from '../../constants/Colors';
 import { InfoText, ListText, DefaultInput, ItemLista } from '../../components/StyledComponents';
 
-const EstabelecimentosScreen = props => {
+const EstabelecimentosScreen = ({ navigation }) => {
     return (
         <Page title='Estabelecimentos Participantes'>
             <View style={styles.buscar}>
@@ -27,7 +27,8 @@ const EstabelecimentosScreen = props => {
                     style={styles.buscarText} />
             </View>
             <View style={styles.listContainer}>
-                <ItemLista>
+                <ItemLista
+                    onPress={() => { navigation.navigate('RecompensasEstabelecimento') }}>
                     <ListText>Lanchonete bom lanche</ListText>
                     <InfoText>Lanchonetes</InfoText>
                     <InfoText>0,8km</InfoText>

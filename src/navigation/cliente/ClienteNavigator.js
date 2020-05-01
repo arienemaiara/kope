@@ -57,8 +57,6 @@ function Estabelecimentos() {
 
 export default BottomTabNavigator = ({ navigation, route }) => {
 
-    console.log('navigation', navigation, route)
-
     //navigation.setOptions({ headerTitle: getHeaderTitle(route), headerTintColor: 'red' });
 
     return (

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AsyncStorage, View, Text } from 'react-native';
+import { AsyncStorage, View, Text, ActivityIndicator } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -10,26 +10,28 @@ import ClienteNavigator from './cliente/ClienteNavigator';
 import AuthContext from '../contexts/auth';
 
 const MainNavigator = props => {
+    const { signed, userType, loading } = useContext(AuthContext);
 
-    const { signed, userType, user } = useContext(AuthContext);
-
-    console.log('signed', signed)
-    console.log('user', user)
+    // if (loading) {
+    //     return(
+    //         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    //             <ActivityIndicator size="large" color="#777" />
+    //         </View>
+    //     )
+    // }
 
     const renderNavigation = () => {
-        return userType === 'estabelecimento' 
-            ? <EstabelecimentoNavigator /> 
+        return userType === 'estabelecimento'
+            ? <EstabelecimentoNavigator />
             : <ClienteNavigator />
     }
-
     return (
-
-            <NavigationContainer>
-                {
-                    signed === true ? renderNavigation()
-                    : <AuthNavigator />
-                }
-            </NavigationContainer>
+        <NavigationContainer>
+            { signed === true 
+                ? renderNavigation()
+                : <AuthNavigator />
+            }
+        </NavigationContainer>
 
     )
 

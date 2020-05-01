@@ -4,10 +4,12 @@ import AuthContext from '../contexts/auth';
 
 const LoginScreen = props => {
 
-    const { signed, signIn } = useContext(AuthContext);
+    const [tipoUsuario, setTipoUsuario] = useState('estabelecimento');
+
+    const { signIn } = useContext(AuthContext);
 
     const handleLogin = () => {
-        signIn();
+        signIn(tipoUsuario);
     }
 
     return (

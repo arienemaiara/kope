@@ -1,20 +1,34 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 
 import TabBarIcon from '../components/TabBarIcon';
 import RecompensasListaScreen from '../screens/estabelecimento/recompensas/RecompensasListaScreen';
+import RecompensasCadastroScreen from '../screens/estabelecimento/recompensas/RecompensasCadastroScreen';
 import ResgatesScreen from '../screens/estabelecimento/ResgatesScreen';
 import ConfiguracoesScreen from '../screens/estabelecimento/ConfiguracoesScreen';
 import LerQRCodeScreen from '../screens/estabelecimento/LerQRCodeScreen';
 import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 const INITIAL_ROUTE_NAME = 'Recompensas';
+
+function Recompensas() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}>
+            <Stack.Screen name="RecompensasLista" component={RecompensasListaScreen} />
+            <Stack.Screen name="RecompensasCadastro" component={RecompensasCadastroScreen} />
+        </Stack.Navigator>
+    )
+}
 
 export default BottomTabNavigator = ({ navigation, route }) => {
 
-    //navigation.setOptions({ headerTitle: getHeaderTitle(route), headerTintColor: 'red' });
 
     return (
         <BottomTab.Navigator 
@@ -32,7 +46,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
             >
             <BottomTab.Screen
                 name="Recompensas"
-                component={RecompensasListaScreen}
+                component={Recompensas}
                 options={{
                     title: "Recompensas",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="star" />

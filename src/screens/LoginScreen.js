@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
-import AuthContext from '../contexts/auth';
 
+import AuthContext from '../contexts/auth';
 import { Container, Title, Label, DefaultButton, FormInput } from '../components/StyledComponents';
 import Colors from '../constants/Colors';
 

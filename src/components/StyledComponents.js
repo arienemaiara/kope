@@ -59,6 +59,11 @@ export const DefaultButton = props => (
     </ButtonContainer>
 );
 
+//------------------- ICON BUTTON ----------------------
+export const HeaderIconButton = styled.TouchableOpacity`
+
+`;
+
 //------------------- INPUTS ----------------------
 export const DefaultInput = styled.TextInput`
     font-size: 16px;

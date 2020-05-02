@@ -45,7 +45,9 @@ const Page = props => {
                     start={[0.0, 0.0]}
                     end={[1.0, 1.0]}
                     style={styles.headerContainer}>
+                    {props.headerBackButton}
                     <Title>{props.title}</Title>
+                    {props.headerRightButton}
                 </LinearGradient>
             </Animated.View>
             
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         flex: 1,
+        flexDirection: 'row',
         paddingTop: (Platform.OS == 'ios') ? 30 : 0,
         height: '100%',
         width: '100%',
@@ -74,7 +77,9 @@ const styles = StyleSheet.create({
     },
     pageContent: {
         marginTop: HEADER_MAX_HEIGHT,
-        paddingBottom: HEADER_MAX_HEIGHT
+        paddingBottom: HEADER_MAX_HEIGHT,
+        flex: 1,
+        height: '100%'
     }
 });
 

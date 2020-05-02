@@ -3,16 +3,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 
-import TabBarIcon from '../../components/TabBarIcon';
-import ConfiguracoesScreen from '../../screens/cliente/ConfiguracoesScreen';
-import LerQRCodeScreen from '../../screens/estabelecimento/LerQRCodeScreen';
-import CadastroScreen from '../../screens/cliente/CadastroScreen';
-import EstabelecimentosScreen from '../../screens/cliente/EstabelecimentosScreen';
-import RecompensasEstabelecimentoScreen from '../../screens/cliente/RecompensasEstabelecimentoScreen';
-import EstabelecimentoDetalheScreen from '../../screens/cliente/EstabelecimentoDetalheScreen';
-import PontosScreen from '../../screens/cliente/PontosScreen';
-import ExtratoPontosScreen from '../../screens/cliente/ExtratoPontosScreen';
-import Colors from '../../constants/Colors';
+import TabBarIcon from '../components/TabBarIcon';
+import ConfiguracoesScreen from '../screens/cliente/ConfiguracoesScreen';
+import LerQRCodeScreen from '../screens/estabelecimento/LerQRCodeScreen';
+import CadastroScreen from '../screens/cliente/CadastroScreen';
+import EstabelecimentosScreen from '../screens/cliente/EstabelecimentosScreen';
+import RecompensasEstabelecimentoScreen from '../screens/cliente/RecompensasEstabelecimentoScreen';
+import EstabelecimentoDetalheScreen from '../screens/cliente/EstabelecimentoDetalheScreen';
+import PontosScreen from '../screens/cliente/PontosScreen';
+import ExtratoPontosScreen from '../screens/cliente/ExtratoPontosScreen';
+import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();

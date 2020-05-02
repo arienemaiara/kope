@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { AsyncStorage } from 'react-native';
-import { Alert } from 'react-native';
 import { autenticar } from '../services/auth';
 
 import api from '../services/api';
@@ -10,8 +9,8 @@ const AuthContext = createContext({
     signed: false,
     user: {},
     userType: '',
-    signIn: () => {},
-    signOut: () => {}
+    signIn: () => { },
+    signOut: () => { }
 });
 
 export const AuthProvider = ({ children }) => {
@@ -39,19 +38,28 @@ export const AuthProvider = ({ children }) => {
 
     }, []);
 
-    const signIn = async (userType) => {
+    const signIn = async (userType, user, password) => {
         setLoading(true);
-        const response = await autenticar();
-        console.log(response.user)
-        setUser(response.user);
-        setUserType(userType);
-        api.defaults.headers['Authorization'] = `Bearer ${response.token}`;
+        return new Promise((resolve, reject) => {
+            autenticar(userType, user, password)
+            .then(async ({ data }) => {
+                setUser(data.user);
+                setUserType(userType);
+                api.defaults.headers['Authorization'] = `Bearer ${data.token}`;
 
-        await AsyncStorage.setItem('user', JSON.stringify(response.user));
-        await AsyncStorage.setItem('userType', userType);
-        await AsyncStorage.setItem('token', response.token);
+                await AsyncStorage.setItem('user', JSON.stringify(data.user));
+                await AsyncStorage.setItem('userType', userType);
+                await AsyncStorage.setItem('token', data.token);
 
-        setLoading(false);
+                setLoading(false);
+
+                resolve();
+            })
+            .catch((error) => {
+                reject(error.response.data.error);
+            });
+        });
+        
     }
 
     const signOut = () => {

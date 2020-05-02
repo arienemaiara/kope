@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 import Colors from '../constants/Colors';
@@ -37,7 +38,7 @@ export const ListText = styled(DefaultText)`
 export const ButtonContainer = styled.TouchableOpacity`
     background-color: ${props => props.backgroundColor};
     border-radius: 8px; 
-    padding: 15px;
+    padding: 10px;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.27);
 `;
 
@@ -75,6 +76,14 @@ export const FormInput = styled(DefaultInput)`
 `;
 
 //------------------- VIEWS ----------------------
+export const Container = styled.KeyboardAvoidingView.attrs({
+    enabled: Platform.OS === 'ios',
+    behavior: 'padding'
+})`
+    flex: 1;
+    justify-content: center;
+`;
+
 export const ItemLista = styled.TouchableOpacity`
     padding: 15px;
     border-bottom-width: 1px;

@@ -11,7 +11,13 @@ const AuthNavigator = props => {
 
     return (
         <AuthStack.Navigator>
-            <AuthStack.Screen name="Login" component={LoginScreen}/>
+            <AuthStack.Screen 
+                name="Login" 
+                component={LoginScreen}
+                options={{
+                    headerShown: false
+                }}
+            />
             <AuthStack.Screen name="CadastroCliente" component={CadastroClienteScreen} />
             <AuthStack.Screen name="CadastroEstabelecimento" component={CadastroEstabelecimentoScreen} />
         </AuthStack.Navigator>

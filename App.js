@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
-import { createStackNavigator } from '@react-navigation/stack';
+
+import './src/config/ReactotronConfig';
 
 import { AuthProvider } from './src/contexts/auth';
 import MainNavigator from './src/navigation/MainNavigator';
 
-const Stack = createStackNavigator();
+
 
 const App = (props) => {
 
@@ -45,12 +45,5 @@ const App = (props) => {
 		)
 	}
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-	},
-});
 
 export default App;

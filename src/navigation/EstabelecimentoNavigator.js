@@ -2,12 +2,12 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet } from 'react-native';
 
-import TabBarIcon from '../../components/TabBarIcon';
-import RecompensasListaScreen from '../../screens/estabelecimento/recompensas/RecompensasListaScreen';
-import ResgatesScreen from '../../screens/estabelecimento/ResgatesScreen';
-import ConfiguracoesScreen from '../../screens/estabelecimento/ConfiguracoesScreen';
-import LerQRCodeScreen from '../../screens/estabelecimento/LerQRCodeScreen';
-import Colors from '../../constants/Colors';
+import TabBarIcon from '../components/TabBarIcon';
+import RecompensasListaScreen from '../screens/estabelecimento/recompensas/RecompensasListaScreen';
+import ResgatesScreen from '../screens/estabelecimento/ResgatesScreen';
+import ConfiguracoesScreen from '../screens/estabelecimento/ConfiguracoesScreen';
+import LerQRCodeScreen from '../screens/estabelecimento/LerQRCodeScreen';
+import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Recompensas';

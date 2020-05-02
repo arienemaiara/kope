@@ -16,11 +16,14 @@ export default {
   bgBtnSuccess: '#27AE61',
   inputBorder: '#BDBDBD', //'#E7E7E7',
   inputBorderBottom: '#AA4BC2',
+  lightGray: '#868686',
   inputText: '#303030',
   defaultText: '#373A4D',
   grayText: '#979797',
-  lightGray: '#868686',
+  pinkText: '#FF549A',
   redText: '#F43E3E',
+  blueText: '#384F7D',
+  purpleText: '#AA4BC2',
   lightGreenText: '#5EB73F',
   greenText: '#437431'
 };

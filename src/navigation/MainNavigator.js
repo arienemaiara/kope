@@ -4,8 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import AuthNavigator from './AuthNavigator';
-import EstabelecimentoNavigator from './estabelecimento/EstabelecimentoNavigator';
-import ClienteNavigator from './cliente/ClienteNavigator';
+import EstabelecimentoNavigator from './EstabelecimentoNavigator';
+import ClienteNavigator from './ClienteNavigator';
 
 import AuthContext from '../contexts/auth';
 

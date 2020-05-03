@@ -18,10 +18,6 @@ export const RecompensaProvider = ({ children }) => {
 
     const { user } = useContext(AuthContext);
 
-    // useEffect(() => {
-    //     carregarRecompensas();
-    // });
-
     const carregarRecompensas = async (page = 1) => {
         setLoading(true);
         api.get('/recompensas', {
@@ -67,7 +63,19 @@ export const RecompensaProvider = ({ children }) => {
     };
 
     const excluirRecompensa = (id) => {
-
+        setLoading(true);
+        return new Promise((resolve, reject) => {
+            api.delete('/recompensas/' + id)
+                .then((response) => {
+                    carregarRecompensas();
+                    setLoading(false);
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    setLoading(false);
+                    reject(error.response);
+                });
+        });
     }
 
     return (

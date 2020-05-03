@@ -1,21 +1,19 @@
 import React, { Fragment, useRef, useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 
 import Page from '../../../components/Page';
 import HeaderButton from '../../../components/header/HeaderButton';
 import ErrorMessage from '../../../components/ErrorMessage';
 import Colors from '../../../constants/Colors';
-import { Container, Label, FormInput } from '../../../components/StyledComponents';
-
-import * as RecompensasService from '../../../services/recompensas';
+import { Container, Label, FormInput, ButtonTransparent } from '../../../components/StyledComponents';
 
 import RecompensaContext from '../../../contexts/recompensa';
 
 const RecompensasCadastroScreen = props => {
 
-    const { adicionarRecompensa, alterarRecompensa } = useContext(RecompensaContext);
+    const { adicionarRecompensa, alterarRecompensa, excluirRecompensa } = useContext(RecompensaContext);
 
     const formRef = useRef();
 
@@ -59,6 +57,26 @@ const RecompensasCadastroScreen = props => {
                 });
         }
     };
+
+    const handleDelete = () => {
+        Alert.alert(
+            'Confirmação',
+            'Deseja excluir a recompensa?',
+            [
+                { text: 'Sim', onPress: () => onConfirmDelete() },
+                { text: 'Cancelar', style: 'cancel' }
+            ])
+    };
+
+    const onConfirmDelete = () => {
+        excluirRecompensa(item.id)
+            .then((response) => {
+                props.navigation.goBack();
+            })
+            .catch((error) => {
+                console.tron.log(error);
+            });
+    }
 
     return (
         <Container>
@@ -119,6 +137,17 @@ const RecompensasCadastroScreen = props => {
                             )}
 
                     </Formik>
+                    {
+                        editMode === true
+                            ? <ButtonTransparent
+                                title="Excluir recompensa"
+                                color={Colors.redText}
+                                titleSize={18}
+                                onPress={handleDelete}
+                            />
+                            : null
+                    }
+
                 </View>
             </Page>
         </Container>

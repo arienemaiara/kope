@@ -71,7 +71,6 @@ const LoginScreen = props => {
                         handleChange,
                         values,
                         errors,
-                        isValid,
                         handleBlur,
                         touched,
                         handleSubmit 

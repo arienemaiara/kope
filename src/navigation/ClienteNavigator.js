@@ -107,17 +107,3 @@ export default BottomTabNavigator = ({ navigation, route }) => {
     );
 
 };
-
-
-function getHeaderTitle(route) {
-    const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-    switch (routeName) {
-        case 'Recompensas':
-            return 'Recompensas';
-        case 'Resgates':
-            return 'Resgates';
-        case 'Configuracoes':
-            return 'Configurações';
-    }
-}

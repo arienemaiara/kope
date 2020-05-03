@@ -8,6 +8,7 @@ import EstabelecimentoNavigator from './EstabelecimentoNavigator';
 import ClienteNavigator from './ClienteNavigator';
 
 import AuthContext from '../contexts/auth';
+import { RecompensaProvider } from '../contexts/recompensa';
 
 const MainNavigator = props => {
     const { signed, userType, loading } = useContext(AuthContext);
@@ -22,7 +23,9 @@ const MainNavigator = props => {
 
     const renderNavigation = () => {
         return userType === 'estabelecimento'
-            ? <EstabelecimentoNavigator />
+            ? <RecompensaProvider>
+                <EstabelecimentoNavigator />
+            </RecompensaProvider>
             : <ClienteNavigator />
     }
     return (

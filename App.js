@@ -8,8 +8,6 @@ import './src/config/ReactotronConfig';
 import { AuthProvider } from './src/contexts/auth';
 import MainNavigator from './src/navigation/MainNavigator';
 
-
-
 const App = (props) => {
 
 	const [isLoadingComplete, setLoadingComplete] = React.useState(false);
@@ -40,7 +38,9 @@ const App = (props) => {
 	} else {
 		return (
 			<AuthProvider>
-				<MainNavigator />
+				
+					<MainNavigator />
+				
 			</AuthProvider>
 		)
 	}

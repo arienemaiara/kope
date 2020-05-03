@@ -11,8 +11,6 @@ import {
     ScrollView
 } from 'react-native';
 
-import api from '../../../services/api';
-
 import { Container } from '../../../components/StyledComponents';
 
 import Page from '../../../components/Page';
@@ -20,31 +18,21 @@ import HeaderButton from '../../../components/header/HeaderButton';
 import RecompensaItem from './RecompensaItem';
 
 import AuthContext from '../../../contexts/auth';
+import RecompensaContext from '../../../contexts/recompensa';
 
 const RecompensasListaScreen = props => {
 
-    const [recompensasLista, setRecompensasLista] = useState();
+    //const [recompensasLista, setRecompensasLista] = useState();
+    const [page, setPage] = useState(1);
+    const [loadingList, setLoadingList] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     const { user } = useContext(AuthContext);
+    const { recompensasLista, carregarRecompensas } = useContext(RecompensaContext);
 
     useEffect(() => {
 
-        const carregarRecompensas = async () => {
-            api.get('/recompensas', {
-                params: {
-                    page: 1,
-                    estabelecimento_id: user.id
-                }
-            })
-            .then((response) => {
-                setRecompensasLista(response.data);
-            })
-            .catch((error) => {
-
-            })
-        };
-
-        carregarRecompensas();
+        carregarRecompensas(1);
 
     }, []);
 
@@ -62,13 +50,15 @@ const RecompensasListaScreen = props => {
             headerRightButton={
                 <HeaderButton iconName='plus' onPress={onAddHandler} />
             }>
-            <Container>
+            
                 <FlatList 
                     data={recompensasLista}
+                    refreshing={false}
+                    onRefresh={() => console.tron.log('refreshin')}
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => <RecompensaItem item={item} onPress={() => onItemPressHandler(item)} />}
                 />
-            </Container>
+          
         </Page>
     );
 }

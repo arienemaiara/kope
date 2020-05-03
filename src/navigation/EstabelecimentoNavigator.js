@@ -44,7 +44,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
 
 
     return (
-        <BottomTab.Navigator 
+        <BottomTab.Navigator
             initialRouteName={INITIAL_ROUTE_NAME}
             tabBarOptions={{
                 activeTintColor: Colors.tintColor,
@@ -56,7 +56,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                     height: 60
                 }
             }}
-            >
+        >
             <BottomTab.Screen
                 name="Recompensas"
                 component={Recompensas}

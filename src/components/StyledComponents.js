@@ -59,6 +59,27 @@ export const DefaultButton = props => (
     </ButtonContainer>
 );
 
+export const ButtonTransparentContainer = styled.TouchableOpacity`
+    padding: 12px;
+`;
+
+export const ButtonTransparentText = styled.Text`
+    font-family: 'circular-std';
+    color: ${props => props.color ? props.color : Colors.defaultText};
+    text-align: center;
+    font-size: ${props => props.titleSize ? props.titleSize+'px' : '16px'};
+`;
+
+export const ButtonTransparent = props => (
+    <ButtonTransparentContainer 
+        onPress={props.onPress}
+        style={props.style}>
+        <ButtonTransparentText 
+            color={props.color}
+            titleSize={props.titleSize}>{props.title}</ButtonTransparentText>
+    </ButtonTransparentContainer>
+);
+
 //------------------- ICON BUTTON ----------------------
 export const HeaderIconButton = styled.TouchableOpacity`
 

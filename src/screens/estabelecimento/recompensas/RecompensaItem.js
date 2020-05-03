@@ -5,9 +5,10 @@ import {
 
 import { ItemLista, ListText, InfoText } from '../../../components/StyledComponents';
 
-const RecompensaItem = ({ item }) => {
+const RecompensaItem = ({ item, onPress }) => {
     return (
-        <ItemLista>
+        <ItemLista
+            onPress={onPress}>
             <ListText>{item.descricao}</ListText>
             <InfoText>{item.qtd_pontos} pts</InfoText>
         </ItemLista>

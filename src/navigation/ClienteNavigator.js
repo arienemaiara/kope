@@ -57,8 +57,6 @@ function Estabelecimentos() {
 
 export default BottomTabNavigator = ({ navigation, route }) => {
 
-    //navigation.setOptions({ headerTitle: getHeaderTitle(route), headerTintColor: 'red' });
-
     return (
         <BottomTab.Navigator
             initialRouteName={INITIAL_ROUTE_NAME}

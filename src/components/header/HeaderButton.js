@@ -10,7 +10,7 @@ const HeaderButton = props => {
         <Feather
             name={props.iconName}
             color='#fff'
-            size={22}
+            size={24}
         />
     </TouchableOpacity>)
 };

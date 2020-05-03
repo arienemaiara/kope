@@ -8,6 +8,7 @@ import RecompensasListaScreen from '../screens/estabelecimento/recompensas/Recom
 import RecompensasCadastroScreen from '../screens/estabelecimento/recompensas/RecompensasCadastroScreen';
 import ResgatesScreen from '../screens/estabelecimento/ResgatesScreen';
 import ConfiguracoesScreen from '../screens/estabelecimento/ConfiguracoesScreen';
+import CadastroScreen from '../screens/estabelecimento/CadastroScreen';
 import LerQRCodeScreen from '../screens/estabelecimento/LerQRCodeScreen';
 import Colors from '../constants/Colors';
 
@@ -23,6 +24,18 @@ function Recompensas() {
             }}>
             <Stack.Screen name="RecompensasLista" component={RecompensasListaScreen} />
             <Stack.Screen name="RecompensasCadastro" component={RecompensasCadastroScreen} />
+        </Stack.Navigator>
+    )
+}
+
+function Configuracoes() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}>
+            <Stack.Screen name="Configuracoes" component={ConfiguracoesScreen} />
+            <Stack.Screen name="Cadastro" component={CadastroScreen} />
         </Stack.Navigator>
     )
 }
@@ -70,7 +83,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
             />
             <BottomTab.Screen
                 name="Configuracoes"
-                component={ConfiguracoesScreen}
+                component={Configuracoes}
                 options={{
                     title: "Configurações",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="settings" />,
@@ -80,17 +93,3 @@ export default BottomTabNavigator = ({ navigation, route }) => {
     );
 
 };
-
-
-function getHeaderTitle(route) {
-    const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-    switch (routeName) {
-        case 'Recompensas':
-            return 'Recompensas';
-        case 'Resgates':
-            return 'Resgates';
-        case 'Configuracoes':
-            return 'Configurações';
-    }
-}

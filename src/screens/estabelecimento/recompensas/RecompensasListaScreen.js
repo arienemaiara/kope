@@ -49,18 +49,12 @@ const RecompensasListaScreen = props => {
     }, []);
 
     const onAddHandler = () => {
-        props.navigation.push('RecompensasCadastro');
+        props.navigation.navigate('RecompensasCadastro');
     }
 
-    // const renderRecompensaItem = (item) => {
-    //     return (
-    //         <TouchableOpacity>
-    //             <Text>{item.descricao}</Text>
-    //             <Text>{item.qtd_pontos}</Text>           
-    //         </TouchableOpacity>
-            
-    //     )
-    // }
+    const onItemPressHandler = (item) => {
+        props.navigation.navigate('RecompensasCadastro', { item });
+    }
 
     return (
         <Page 
@@ -72,7 +66,7 @@ const RecompensasListaScreen = props => {
                 <FlatList 
                     data={recompensasLista}
                     keyExtractor={(item) => item.id}
-                    renderItem={({item}) => <RecompensaItem item={item} />}
+                    renderItem={({item}) => <RecompensaItem item={item} onPress={() => onItemPressHandler(item)} />}
                 />
             </Container>
         </Page>

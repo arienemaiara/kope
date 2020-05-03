@@ -27,16 +27,19 @@
     "expo-font": "~8.0.0",
     "expo-linear-gradient": "~8.0.0",
     "expo-web-browser": "~8.0.0",
+    "formik": "^2.1.4",
     "prop-types": "^15.7.2",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-gesture-handler": "~1.5.0",
+    "react-native-masked-text": "^1.13.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "~0.11.7",
     "reactotron-react-native": "^5.0.0",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "yup": "^0.28.5"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

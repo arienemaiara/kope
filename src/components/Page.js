@@ -10,7 +10,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 
 import Colors from '../constants/Colors';
-
+import Background from './Background';
 import { Title } from './StyledComponents';
 
 const HEADER_MIN_HEIGHT = 100;
@@ -78,8 +78,8 @@ const styles = StyleSheet.create({
     pageContent: {
         marginTop: HEADER_MAX_HEIGHT,
         paddingBottom: HEADER_MAX_HEIGHT,
-        flex: 1,
-        height: '100%'
+        //flex: 1,
+        //minHeight: '100%'
     }
 });
 

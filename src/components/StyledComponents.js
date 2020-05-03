@@ -1,20 +1,21 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
+import { TextInputMask } from 'react-native-masked-text'
 import Colors from '../constants/Colors';
 
 //------------------- TEXTS ----------------------
 export const DefaultText = styled.Text`
     font-family: 'circular-std';
-    font-size: ${props => props.fontSize ? props.fontSize+'px' : '14px'};
+    font-size: ${props => props.fontSize ? props.fontSize + 'px' : '14px'};
     color: ${Colors.defaultText};
     margin: 2px;
 `;
 
 export const Label = styled(DefaultText)`
     text-transform: uppercase;
-    margin: 10px 0;
+    margin: 10px 0 5px 0;
 `;
 
 export const InfoText = styled(DefaultText)`
@@ -51,7 +52,7 @@ const ButtonText = styled.Text`
 `;
 
 export const DefaultButton = props => (
-    <ButtonContainer 
+    <ButtonContainer
         onPress={props.onPress}
         backgroundColor={props.backgroundColor}
         style={props.style}>
@@ -67,14 +68,14 @@ export const ButtonTransparentText = styled.Text`
     font-family: 'circular-std';
     color: ${props => props.color ? props.color : Colors.defaultText};
     text-align: center;
-    font-size: ${props => props.titleSize ? props.titleSize+'px' : '16px'};
+    font-size: ${props => props.titleSize ? props.titleSize + 'px' : '16px'};
 `;
 
 export const ButtonTransparent = props => (
-    <ButtonTransparentContainer 
+    <ButtonTransparentContainer
         onPress={props.onPress}
         style={props.style}>
-        <ButtonTransparentText 
+        <ButtonTransparentText
             color={props.color}
             titleSize={props.titleSize}>{props.title}</ButtonTransparentText>
     </ButtonTransparentContainer>
@@ -86,7 +87,7 @@ export const HeaderIconButton = styled.TouchableOpacity`
 `;
 
 //------------------- INPUTS ----------------------
-export const DefaultInput = styled.TextInput`
+const DefaultInputCSS = css`
     font-size: 16px;
     color: ${Colors.inputText};
     padding: 12px 15px;
@@ -94,11 +95,24 @@ export const DefaultInput = styled.TextInput`
     border-color: ${Colors.inputBorder};
     border-radius: 8px;
 `;
-  
-export const FormInput = styled(DefaultInput)`
+
+const FormInputCSS = css`
     border-bottom-color: ${Colors.inputBorderBottom};
     border-bottom-width: 4px;
     margin-bottom: 5px;
+`
+
+export const DefaultInput = styled.TextInput`
+    ${DefaultInputCSS}
+`;
+
+export const FormInput = styled(DefaultInput)`
+    ${FormInputCSS}
+`;
+
+export const MaskedInput = styled(TextInputMask)`
+    ${DefaultInputCSS}
+    ${FormInputCSS}
 `;
 
 //------------------- VIEWS ----------------------

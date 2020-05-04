@@ -53,7 +53,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                     fontFamily: 'circular-std'
                 },
                 style: {
-                    height: 60
+                    height: 90
                 }
             }}
         >

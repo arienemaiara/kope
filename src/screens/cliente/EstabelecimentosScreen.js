@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import * as Location from 'expo-location';
 import {
     Text,
     FlatList,
@@ -14,26 +15,75 @@ import Page from '../../components/Page';
 import Colors from '../../constants/Colors';
 import { InfoText, ListText, DefaultInput, ItemLista } from '../../components/StyledComponents';
 
+import api from '../../services/api';
+
 const EstabelecimentosScreen = ({ navigation }) => {
+
+    //const [location, setLocation] = useState();
+    const [enderecosLista, setEnderecosLista] = useState([]);
+
+    let location;
+
+    const getLocation = async () => {
+        let { status } = await Location.requestPermissionsAsync();
+        location = await Location.getCurrentPositionAsync({});
+    };
+
+    useEffect(() => {
+        (async () => {
+            await getLocation();
+            console.tron.log(location);
+            carregarEnderecos();
+        })();
+    }, []);
+
+    const carregarEnderecos = () => {
+        console.tron.log(location);
+        api.get('/estabelecimentos', {
+            params: {
+                latitude: location?.coords?.latitude,
+                longitude: location?.coords?.longitude,
+            }
+        })
+            .then((response) => {
+                setEnderecosLista(response.data)
+            })
+    }
+
+    const renderItem = (item) => {
+        const { estabelecimento } = item;
+        return (
+            <ItemLista
+                onPress={() => { navigation.navigate('EstabelecimentoDetalhe', { id: estabelecimento.id }) }}>
+                <ListText>{estabelecimento.nome}</ListText>
+                {
+                    item.distancia &&
+                    <InfoText>{converterDistanciaKM(item.distancia)}km</InfoText>
+                }
+            </ItemLista>
+        )
+    }
+
+    const converterDistanciaKM = (distanciaMetros) => {
+        const distanciaKM = parseFloat(distanciaMetros) / 1000;
+        return distanciaKM.toFixed(2);
+    }
+
     return (
         <Page title='Estabelecimentos Participantes'>
             <View style={styles.buscar}>
-                <Feather 
+                <Feather
                     name="search"
                     style={styles.buscarIcon}
                 />
-                <DefaultInput 
+                <DefaultInput
                     placeholder="Procurar estabelecimento"
                     style={styles.buscarText} />
             </View>
-            <View style={styles.listContainer}>
-                <ItemLista
-                    onPress={() => { navigation.navigate('RecompensasEstabelecimento') }}>
-                    <ListText>Lanchonete bom lanche</ListText>
-                    <InfoText>Lanchonetes</InfoText>
-                    <InfoText>0,8km</InfoText>
-                </ItemLista>
-            </View>
+            <FlatList
+                data={enderecosLista}
+                keyExtractor={(item) => item.id}
+                renderItem={({ item }) => renderItem(item)} />
         </Page>
     );
 };

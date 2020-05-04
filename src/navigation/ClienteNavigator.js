@@ -67,7 +67,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                     fontFamily: 'circular-std'
                 },
                 style: {
-                    height: 60
+                    height: 90
                 }
             }}
         >
@@ -75,7 +75,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                 name="Estabelecimentos"
                 component={Estabelecimentos}
                 options={{
-                    title: "Estabelecimentos",
+                    title: "Lugares",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="shopping-cart" />,
                 }}
             />

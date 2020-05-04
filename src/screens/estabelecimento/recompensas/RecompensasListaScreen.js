@@ -1,17 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import {
-    FlatList,
-    Text,
-    TextInput,
-    View,
-    TouchableOpacity,
-    StyleSheet,
-    Platform,
-    Animated,
-    ScrollView
+    FlatList
 } from 'react-native';
-
-import { Container } from '../../../components/StyledComponents';
 
 import Page from '../../../components/Page';
 import HeaderButton from '../../../components/header/HeaderButton';

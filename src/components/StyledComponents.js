@@ -19,7 +19,7 @@ export const Label = styled(DefaultText)`
 `;
 
 export const InfoText = styled(DefaultText)`
-    font-size: 14px;
+    font-size: 16px;
     color: ${Colors.grayText};
 `;
 

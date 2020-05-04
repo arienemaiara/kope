@@ -58,7 +58,8 @@ const Page = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        backgroundColor: '#fff'
     },
     header: {
         position: 'absolute',
@@ -78,8 +79,7 @@ const styles = StyleSheet.create({
     pageContent: {
         marginTop: HEADER_MAX_HEIGHT,
         paddingBottom: HEADER_MAX_HEIGHT,
-        //flex: 1,
-        //minHeight: '100%'
+        
     }
 });
 

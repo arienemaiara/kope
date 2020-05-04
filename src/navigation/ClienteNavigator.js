@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 
 import TabBarIcon from '../components/TabBarIcon';
 import ConfiguracoesScreen from '../screens/cliente/ConfiguracoesScreen';
-import LerQRCodeScreen from '../screens/estabelecimento/LerQRCodeScreen';
+import QRCodeScreen from '../screens/cliente/QRCodeScreen';
 import CadastroScreen from '../screens/cliente/CadastroScreen';
 import EstabelecimentosScreen from '../screens/cliente/EstabelecimentosScreen';
 import RecompensasEstabelecimentoScreen from '../screens/cliente/RecompensasEstabelecimentoScreen';
@@ -89,10 +89,10 @@ export default BottomTabNavigator = ({ navigation, route }) => {
             />
             <BottomTab.Screen
                 name="QRCode"
-                component={LerQRCodeScreen}
+                component={QRCodeScreen}
                 options={{
                     title: "QR Code",
-                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="plus-circle" />,
+                    tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="grid" />,
                 }}
             />
             <BottomTab.Screen

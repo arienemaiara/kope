@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-    TouchableOpacity,
-} from 'react-native';
 
-import { ItemLista, ListText, InfoText } from '../../../components/StyledComponents';
+import { ItemLista, ListText, InfoText } from './StyledComponents';
 
 const RecompensaItem = ({ item, onPress }) => {
     return (

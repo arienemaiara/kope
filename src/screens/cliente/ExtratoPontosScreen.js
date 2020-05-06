@@ -9,7 +9,7 @@ import {
 import {
     InfoText,
     ListText,
-    DefaultInput,
+    DefaultText,
     ItemLista
 } from '../../components/StyledComponents';
 
@@ -77,7 +77,10 @@ const ExtratoPontosScreen = props => {
                     onPress={() => props.navigation.goBack()} />
             }>
             <View>
-                
+                <View style={styles.saldoInfo}>
+                    <DefaultText fontSize={20} color={Colors.grayText}>Saldo Atual</DefaultText>
+                    <DefaultText fontSize={22}>{saldoAtual} pontos</DefaultText>
+                </View>
                 <FlatList
                     data={extratoLista}
                     keyExtractor={(item) => item.id}
@@ -88,21 +91,19 @@ const ExtratoPontosScreen = props => {
 };
 
 const styles = StyleSheet.create({
-    infoText: {
-        textAlign: 'center',
-        fontSize: 16,
-        padding: 30
-    },
     itemContainer: {
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'flex-end'
     },  
-    pontosText: {
-        fontSize: 24
-    },
-    
+    saldoInfo: {
+        paddingVertical: 15,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomColor: Colors.listSeparator,
+        borderBottomWidth: 1,
+    }
 })
 
 export default ExtratoPontosScreen;

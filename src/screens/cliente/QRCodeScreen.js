@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import QRCode from 'react-native-qrcode-generator';
 
 import Page from '../../components/Page';
@@ -14,6 +14,7 @@ const QRCodeScreen = props => {
         <Page
             title="QR Code">
             <View style={styles.container}>
+                <Text>Mostre o QR code ao estabelecimento para fazer o acúmulo ou resgate de pontos</Text>
                 <QRCode
                     value={user.cpf}
                     size={250}

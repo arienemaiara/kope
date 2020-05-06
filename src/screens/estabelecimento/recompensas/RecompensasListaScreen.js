@@ -5,7 +5,7 @@ import {
 
 import Page from '../../../components/Page';
 import HeaderButton from '../../../components/header/HeaderButton';
-import RecompensaItem from './RecompensaItem';
+import RecompensaItem from '../../../components/RecompensaItem';
 
 import AuthContext from '../../../contexts/auth';
 import RecompensaContext from '../../../contexts/recompensa';

@@ -1,48 +1,73 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import React, { useState, useEffect } from 'react';
+import { View, FlatList, Linking, StyleSheet } from 'react-native';
 
 import Page from '../../components/Page';
-import { ItemLista, DefaultText, InfoText, ListText } from '../../components/StyledComponents';
+import HeaderButton from '../../components/header/HeaderButton';
+import RecompensaItem from '../../components/RecompensaItem';
+import { ItemLista, DefaultText, InfoText, SubTitle } from '../../components/StyledComponents';
 import Colors from '../../constants/Colors';
+import * as recompensasService from '../../services/recompensas';
+import { converterDistanciaKM } from '../../utils/helpers';
 
-const RecompensasEstabelecimentoScreen = ({ navigation }) => {
+const RecompensasEstabelecimentoScreen = (props) => {
+
+    const [page, setPage] = useState(1);
+    const [recompensasLista, setRecompensasLista] = useState([]);
+
+    const estabelecimento = props.route?.params?.estabelecimento;
+    const endereco = props.route?.params?.endereco;
+
+    const buscarRecompensas = () => {
+        recompensasService.buscar(page, estabelecimento.id)
+            .then((response) => {
+                setRecompensasLista(response.data);
+            })
+    }
+
+    useEffect(() => {
+        buscarRecompensas();
+    }, []);
+
     return (
-        <Page title="Lachonete Bom Lanche">
-            <View>
+        <Page
+            title={estabelecimento.nome}
+            headerBackButton={
+                <HeaderButton
+                    iconName='arrow-left'
+                    onPress={() => props.navigation.goBack()} />
+            }>
+            <View style={styles.estabelecimentoInfo}>
+                <InfoText>{converterDistanciaKM(endereco.distancia)} km</InfoText>
                 <View>
-                    <InfoText>Lanchonetes</InfoText>
-                    <InfoText>0,8 km</InfoText>
-                </View>
-                <View>
-                    <InfoText>Sobre o estabelecimento</InfoText>
-                    <InfoText>Ver mais informações</InfoText>
+                    <DefaultText fontSize={16}>Sobre o estabelecimento</DefaultText>
+                    <DefaultText 
+                        color={Colors.pinkText} 
+                        onPress={() => { 
+                            props.navigation.navigate('EstabelecimentoDetalhe', { estabelecimento, endereco } ) 
+                        }}>
+                        Ver mais informações >
+                    </DefaultText>
                 </View>
             </View>
-            <View>
-                <DefaultText>Você possui xx pontos nesse estabelecimento</DefaultText>
-            </View>
-            <View>
-                <ItemLista
-                    onPress={() => { }}>
-                    <ListText>Açaí 500ml</ListText>
-                    <InfoText>50pts</InfoText>
-                </ItemLista>
-                <ItemLista
-                    onPress={() => { }}>
-                    <ListText>X-Salada</ListText>
-                    <InfoText>50pts</InfoText>
-                </ItemLista>
+            <View style={{justifyContent: 'center'}}>
+                <SubTitle color={Colors.greenText}>Produtos disponíveis para regaste</SubTitle>
+                <FlatList
+                    data={recompensasLista}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => <RecompensaItem item={item} onPress={() => {}} />}
+                />
             </View>
         </Page>
     );
 };
 
 const styles = StyleSheet.create({
-    icon: {
-        marginRight: 10,
-        color: Colors.defaultText,
-        fontSize: 26
+    estabelecimentoInfo: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 20,
     }
 });
 

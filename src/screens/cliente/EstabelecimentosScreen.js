@@ -14,7 +14,7 @@ import { Feather } from '@expo/vector-icons';
 import Page from '../../components/Page';
 import Colors from '../../constants/Colors';
 import { InfoText, ListText, DefaultInput, ItemLista } from '../../components/StyledComponents';
-
+import { converterDistanciaKM } from '../../utils/helpers';
 import api from '../../services/api';
 
 const EstabelecimentosScreen = ({ navigation }) => {
@@ -54,7 +54,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
         const { estabelecimento } = item;
         return (
             <ItemLista
-                onPress={() => { navigation.navigate('EstabelecimentoDetalhe', { id: estabelecimento.id }) }}>
+                onPress={() => { navigation.navigate('RecompensasEstabelecimento', { estabelecimento, endereco: item }) }}>
                 <ListText>{estabelecimento.nome}</ListText>
                 {
                     item.distancia &&
@@ -62,11 +62,6 @@ const EstabelecimentosScreen = ({ navigation }) => {
                 }
             </ItemLista>
         )
-    }
-
-    const converterDistanciaKM = (distanciaMetros) => {
-        const distanciaKM = parseFloat(distanciaMetros) / 1000;
-        return distanciaKM.toFixed(2);
     }
 
     return (

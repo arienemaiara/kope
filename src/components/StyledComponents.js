@@ -8,8 +8,8 @@ import Colors from '../constants/Colors';
 //------------------- TEXTS ----------------------
 export const DefaultText = styled.Text`
     font-family: 'circular-std';
-    font-size: ${props => props.fontSize ? props.fontSize + 'px' : '14px'};
-    color: ${Colors.defaultText};
+    font-size: ${props => props.fontSize ? props.fontSize + 'px' : '16px'};
+    color: ${props => props.color ? props.color : Colors.defaultText};
     margin: 2px;
 `;
 
@@ -28,6 +28,13 @@ export const Title = styled(DefaultText)`
     font-size: 24px;
     color: white;
     width: 80%;
+`;
+
+export const SubTitle = styled(DefaultText)`
+    text-align: center;
+    font-size: 20px;
+    color: ${props => props.color ? props.color : Colors.defaultText};
+    margin: 15px 0;
 `;
 
 export const ListText = styled(DefaultText)`
@@ -124,12 +131,20 @@ export const Container = styled.KeyboardAvoidingView.attrs({
     justify-content: center;
 `;
 
+export const Row = styled.View`
+    flex-direction: row;
+    align-items: center;
+    padding: ${props => props.padding ? props.padding + 'px' : '0px'};
+`;
+
+export const Column = styled.View`
+    flex-direction: column;
+`;
+
 export const ItemLista = styled.TouchableOpacity`
     padding: 15px;
     border-bottom-width: 1px;
-    border-bottom-color: ${Colors.inputBorder};
-    /* border-top-width: 1px;
-    border-top-color: ${Colors.inputBorder}; */
+    border-bottom-color: ${Colors.listSeparator};
     flex-direction: ${props => props.flexRow ? 'row' : 'column'};
     align-items: flex-start;
 `;

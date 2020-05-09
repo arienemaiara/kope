@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Platform,
     Animated,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -17,9 +17,9 @@ const HEADER_MIN_HEIGHT = 100;
 const HEADER_MAX_HEIGHT = 150;
 
 const Page = props => {
-    const [scrollYAnimatedValue, setScrollYAnimatedValue] = useState(new Animated.Value(0));
+    const [scrollOffset, setScrollOffset] = useState(new Animated.Value(0));
 
-    const headerHeight = scrollYAnimatedValue.interpolate({
+    const headerHeight = scrollOffset.interpolate({
         inputRange: [0, (HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT)],
         outputRange: [HEADER_MAX_HEIGHT, HEADER_MIN_HEIGHT],
         extrapolate: 'clamp'
@@ -27,13 +27,14 @@ const Page = props => {
 
     return (
         <View style={styles.container}>
+
             <ScrollView
                 contentContainerStyle={styles.pageContent}
                 scrollEventThrottle={10}
                 onScroll={Animated.event(
-                    [{ nativeEvent: { contentOffset: { y: scrollYAnimatedValue } } }]
+                    [{ nativeEvent: { contentOffset: { y: scrollOffset } } }]
                 )}
-                >
+            >
                 {props.children}
             </ScrollView>
 
@@ -50,7 +51,7 @@ const Page = props => {
                     {props.headerRightButton}
                 </LinearGradient>
             </Animated.View>
-            
+
         </View>
     );
 };
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     pageContent: {
         marginTop: HEADER_MAX_HEIGHT,
         paddingBottom: HEADER_MAX_HEIGHT,
-        
+
     }
 });
 

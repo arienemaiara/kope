@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {
     View,
     FlatList,
+    Alert,
     StyleSheet
 } from 'react-native';
 
 import {
     InfoText,
     ListText,
+    DefaultText,
     DefaultInput,
     ItemLista
 } from '../../components/StyledComponents';
+import SemRegistros from '../../components/SemRegistros';
 
 import Page from '../../components/Page';
 import Colors from '../../constants/Colors';
@@ -30,7 +33,7 @@ const PontosScreen = ({ navigation }) => {
                 setPontosLista(response.data);
             })
             .catch((error) => {
-
+                Alert.alert('Erro', 'Erro ao buscar pontuação')
             });
     }
 
@@ -38,9 +41,10 @@ const PontosScreen = ({ navigation }) => {
         const { estabelecimento } = item;
         return (
             <ItemLista
-                onPress={() => { navigation.navigate('ExtratoPontos', 
-                                    { estabelecimento_id: estabelecimento.id, estabelecimento_nome: estabelecimento.nome }) 
-                                }}>
+                onPress={() => {
+                    navigation.navigate('ExtratoPontos',
+                        { estabelecimento_id: estabelecimento.id, estabelecimento_nome: estabelecimento.nome })
+                }}>
                 <ListText>{estabelecimento.nome}</ListText>
                 <InfoText style={styles.pontosText}>{item.total_pontos} pts</InfoText>
             </ItemLista>
@@ -48,17 +52,23 @@ const PontosScreen = ({ navigation }) => {
     }
 
     return (
-        <Page 
+        <Page
             title='Meus Pontos'>
-            <View>
-                <InfoText style={styles.infoText}>
-                    Selecione o estabelecimento para ver seu extrato
-                </InfoText>
-                <FlatList
-                    data={pontosLista}
-                    keyExtractor={(item) => item.estabelecimento.id}
-                    renderItem={({ item }) => renderItem(item)} />
-            </View>
+            {
+                pontosLista.length === 0 ?
+                <SemRegistros message="Você ainda não pontuou em nenhum estabelecimento." />
+                :
+                <View>
+                    <InfoText style={styles.infoText}>
+                        Selecione o estabelecimento para ver seu extrato
+                    </InfoText>
+                    <FlatList
+                        data={pontosLista}
+                        keyExtractor={(item) => item.estabelecimento.id}
+                        renderItem={({ item }) => renderItem(item)} />
+                </View>
+            }
+
         </Page>
     );
 };

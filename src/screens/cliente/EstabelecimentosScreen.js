@@ -65,7 +65,8 @@ const EstabelecimentosScreen = ({ navigation }) => {
     }
 
     return (
-        <Page title='Estabelecimentos Participantes'>
+        <Page 
+            title='Estabelecimentos Participantes'>
             <View style={styles.buscar}>
                 <Feather
                     name="search"

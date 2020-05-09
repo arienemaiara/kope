@@ -31,7 +31,6 @@ const LoginScreen = props => {
 
     const { signIn } = useContext(AuthContext);
 
-    let usuarioInputRef;
 
     const validationSchema = Yup.object().shape({
         email: Yup.string()
@@ -50,7 +49,6 @@ const LoginScreen = props => {
                 Alert.alert('Erro', error);
             });
     }
-
 
     const renderLogin = () => {
 

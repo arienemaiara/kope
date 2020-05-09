@@ -44,6 +44,7 @@ const RecompensasCadastroScreen = props => {
                     props.navigation.goBack();
                 })
                 .catch((error) => {
+                    Alert.alert('Erro', error.data.error);
                     console.tron.log(error);
                 });
         }
@@ -53,7 +54,8 @@ const RecompensasCadastroScreen = props => {
                     props.navigation.goBack();
                 })
                 .catch((error) => {
-                    console.tron.log(error);
+                    Alert.alert('Erro', error.data.error);
+                    console.tron.log(error.data.error);
                 });
         }
     };

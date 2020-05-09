@@ -12,7 +12,7 @@ import RecompensaContext from '../../../contexts/recompensa';
 
 const RecompensasListaScreen = props => {
 
-    //const [recompensasLista, setRecompensasLista] = useState();
+    const [recompensas, setRecompensas] = useState();
     const [page, setPage] = useState(1);
     const [loadingList, setLoadingList] = useState(true);
     const [isRefreshing, setIsRefreshing] = useState(false);
@@ -21,10 +21,12 @@ const RecompensasListaScreen = props => {
     const { recompensasLista, carregarRecompensas } = useContext(RecompensaContext);
 
     useEffect(() => {
-
         carregarRecompensas(1);
-
     }, []);
+
+    useEffect(() => {
+        setRecompensas(recompensasLista);
+    }, [recompensasLista]);
 
     const onAddHandler = () => {
         props.navigation.navigate('RecompensasCadastro');
@@ -42,7 +44,7 @@ const RecompensasListaScreen = props => {
             }>
             
                 <FlatList 
-                    data={recompensasLista}
+                    data={recompensas}
                     refreshing={false}
                     onRefresh={() => console.tron.log('refreshin')}
                     keyExtractor={(item) => item.id}

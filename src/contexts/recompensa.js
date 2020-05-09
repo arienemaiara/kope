@@ -26,8 +26,8 @@ export const RecompensaProvider = ({ children }) => {
                 estabelecimento_id: user.id
             }
         })
-            .then((response) => setRecompensasLista(response.data))
-            .finally(() => setLoading(false));
+        .then((response) => setRecompensasLista(response.data))
+        .finally(() => setLoading(false));
     };
 
     const adicionarRecompensa = async (recompensa) => {

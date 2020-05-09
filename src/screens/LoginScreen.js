@@ -34,20 +34,18 @@ const LoginScreen = props => {
     let usuarioInputRef;
 
     const validationSchema = Yup.object().shape({
-        usuario: Yup.string()
-            .required('Informe o CPF')
-            .test('cpf-valido', 'Informe um CPF válido', (val) => {
-                return usuarioInputRef.isValid();
-            }),
+        email: Yup.string()
+            .required('Informe o e-mail')
+            .email('Digite um e-mail válido'),
         senha: Yup.string()
             .required('Informe a senha')
             .min(6, 'A senha deve ter no mínimo 6 caracteres')
     });
 
     const handleLogin = (formValues) => {
-        const usuario = usuarioInputRef.getRawValue();
+        const email = formValues.email;
         const senha = formValues.senha;
-        signIn(tipoUsuario, usuario, senha)
+        signIn(tipoUsuario, email, senha)
             .catch((error) => {
                 Alert.alert('Erro', error);
             });
@@ -56,14 +54,12 @@ const LoginScreen = props => {
 
     const renderLogin = () => {
 
-        const label = tipoUsuario === 'cliente' ? 'CPF' : 'CPF/CNPJ';
         const navigateTo = tipoUsuario === 'cliente' ? 'CadastroCliente' : 'CadastroEstabelecimento';
-        const maskType = 'cpf' //tipoUsuario === 'cliente' ? 'cpf' : 'cnpj';
 
         return (
             <View style={styles.inputContainer}>
                 <Formik
-                    initialValues={{ usuario: '', senha: '' }}
+                    initialValues={{ email: '', senha: '' }}
                     onSubmit={values => handleLogin(values)}
                     validationSchema={validationSchema}
                 >
@@ -76,21 +72,20 @@ const LoginScreen = props => {
                         handleSubmit 
                     }) => (
                         <Fragment>
-                            <Label>{label}</Label>
-                            <MaskedInput
-                                type={maskType}
-                                placeholder={`Digite seu ${label}`}
-                                keyboardType="numeric"
+                            <Label>E-mail</Label>
+                            <FormInput
+                                placeholder="Digite seu e-mail"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
                                 returnKeyType="next"
-                                value={values.usuario}
-                                onChangeText={handleChange('usuario')}
-                                onBlur={handleBlur('usuario')}
-                                ref={(ref) => usuarioInputRef = ref}
-                                style={touched.usuario && errors.usuario ?
+                                value={values.email}
+                                onChangeText={handleChange('email')}
+                                onBlur={handleBlur('email')}
+                                style={touched.email && errors.email ?
                                     { borderBottomColor: 'red' }
                                     : { borderBottomColor: Colors.inputBorderBottom }} />
 
-                            <ErrorMessage errorValue={touched.usuario && errors.usuario} />
+                            <ErrorMessage errorValue={touched.email && errors.email} />
 
                             <Label>Senha</Label>
                             <FormInput

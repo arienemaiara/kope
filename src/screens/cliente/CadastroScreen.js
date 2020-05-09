@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useContext } from 'react';
+import React, { Fragment, useRef, useContext, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { View, Alert, StyleSheet } from 'react-native';
@@ -17,45 +17,47 @@ import Colors from '../../constants/Colors';
 import * as ClienteService from '../../services/cliente';
 import AuthContext from '../../contexts/auth';
 
+import { validationShapeCliente } from '../../utils/validationShape';
+
 const CadastroScreen = props => {
 
-    const { signIn } = useContext(AuthContext);
-
-    let initialValues = {
+    const [initialValues, setInitialValues] = useState({
         cpf: '',
         nome: '',
         email: '',
         telefone: '',
         password: '',
         confirmPassword: ''
-    }
-
+    });
+    const usuario = props.route?.params?.usuario;
+    const editMode = usuario ? true : false;
     const formRef = useRef();
-
     let cpfInputRef;
     let telefoneInputRef;
-
-    const validationSchema = Yup.object().shape({
+    let validationShape = validationShapeCliente(editMode, cpfInputRef);
+    validationShape = {
+        ...validationShape,
         cpf: Yup.string()
             .required('Informe o CPF')
             .test('cpf-valido', 'Informe um CPF válido', (val) => {
                 return cpfInputRef.isValid();
             }),
-        nome: Yup.string()
-            .required('Informe o nome completo')
-            .min(6, 'O nome deve ter no mínimo 6 caracteres'),
-        email: Yup.string()
-            .required('Informe o e-mail')
-            .email('Informe um e-mail válido'),
-        telefone: Yup.string()
-            .required('Informe o celular'),
-        password: Yup.string()
-            .required('Informe a senha')
-            .min(6, 'A senha deve ter no mínimo 6 caracteres'),
-        confirmPassword: Yup.string()
-            .required('Informe a confirmação de senha')
-            .oneOf([Yup.ref('password'), null], 'Confirmação e senha devem ser iguais')
-    });
+    }
+    const validationSchema = Yup.object().shape(validationShape);
+
+    const { signIn } = useContext(AuthContext);
+
+    useEffect(() => {
+        if (editMode === true) {
+            ClienteService.detalhe()
+                .then((response) => {
+                    setInitialValues(response.data);
+                })
+                .catch((error) => {
+                    Alert.alert('Erro', 'Erro ao buscar os dados cadastrados');
+                })
+        }
+    }, []);
 
     const onSaveButtonPressed = () => {
         if (formRef.current) {
@@ -69,9 +71,20 @@ const CadastroScreen = props => {
         formData.telefone = telefoneInputRef.getRawValue();
         delete formData.confirmPassword;
 
+        if (editMode === true) {
+            delete formData.password;
+            editarCliente(formData);
+        }
+        else {
+            cadastrarCliente(formData);
+        }
+
+    };
+
+    const cadastrarCliente = (formData) => {
         ClienteService.cadastrar(formData)
             .then((response) => {
-                signIn('cliente', formData.cpf, formData.password)
+                signIn('cliente', formData.email, formData.password)
             })
             .catch((error) => {
                 console.tron.log(error.response);
@@ -83,12 +96,34 @@ const CadastroScreen = props => {
                     Alert.alert('Erro', errorData.messages)
                 }
             });
-    };
+    }
+
+    const editarCliente = (formData) => {
+        ClienteService.atualizar(formData)
+            .then((response) => {
+                Alert.alert(
+                    'Sucesso',
+                    'Dados atualizados',
+                    [{
+                        text: 'OK',
+                        onPress: () => props.navigation.goBack()
+                    }]);
+            })
+            .catch((error) => {
+                const errorData = error.response.data;
+                if (error.response.status === 500) {
+                    Alert.alert('Erro', 'Erro interno do servidor')
+                }
+                else if (errorData.messages) {
+                    Alert.alert('Erro', errorData.messages)
+                }
+            });
+    }
 
     return (
         <Container>
             <Page
-                title="Cadastre-se"
+                title={editMode ? 'Editar dados pessoais' : 'Cadastre-se'}
                 headerBackButton={
                     <HeaderButton
                         iconName='arrow-left'
@@ -101,6 +136,7 @@ const CadastroScreen = props => {
 
                     <Formik
                         initialValues={initialValues}
+                        enableReinitialize={true}
                         onSubmit={values => handleSave(values)}
                         validationSchema={validationSchema}
                         innerRef={formRef}
@@ -124,6 +160,7 @@ const CadastroScreen = props => {
                                             value={values.cpf}
                                             onChangeText={handleChange('cpf')}
                                             onBlur={handleBlur('cpf')}
+                                            editable={!editMode}
                                             ref={(ref) => cpfInputRef = ref}
                                             style={touched.cpf && errors.cpf ?
                                                 { borderBottomColor: 'red' }
@@ -150,7 +187,7 @@ const CadastroScreen = props => {
                                         <Label>E-mail</Label>
                                         <FormInput
                                             placeholder="Digite seu e-mail"
-                                            autoCapitalize="false@gmai"
+                                            autoCapitalize="none"
                                             keyboardType="email-address"
                                             returnKeyType="next"
                                             value={values.email}
@@ -181,40 +218,45 @@ const CadastroScreen = props => {
                                         <ErrorMessage errorValue={touched.telefone && errors.telefone} />
                                     </View>
 
-                                    <View>
-                                        <Label>Senha</Label>
-                                        <FormInput
-                                            placeholder="Digite sua senha"
-                                            secureTextEntry={true}
-                                            textContentType="password"
-                                            returnKeyType="next"
-                                            value={values.password}
-                                            onChangeText={handleChange('password')}
-                                            onBlur={handleBlur('password')}
-                                            style={touched.password && errors.password ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.password && errors.password} />
-                                    </View>
+                                    {!editMode &&
+                                        <>
+                                            <View>
+                                                <Label>Senha</Label>
+                                                <FormInput
+                                                    placeholder="Digite sua senha"
+                                                    secureTextEntry={true}
+                                                    textContentType="password"
+                                                    returnKeyType="next"
+                                                    value={values.password}
+                                                    onChangeText={handleChange('password')}
+                                                    onBlur={handleBlur('password')}
+                                                    style={touched.password && errors.password ?
+                                                        { borderBottomColor: 'red' }
+                                                        : { borderBottomColor: Colors.inputBorderBottom }}
+                                                />
+                                                <ErrorMessage errorValue={touched.password && errors.password} />
+                                            </View>
 
-                                    <View>
-                                        <Label>Confirmar senha</Label>
-                                        <FormInput
-                                            placeholder="Confirme a senha"
-                                            secureTextEntry={true}
-                                            textContentType="password"
-                                            returnKeyType="send"
-                                            value={values.confirmPassword}
-                                            onChangeText={handleChange('confirmPassword')}
-                                            onBlur={handleBlur('confirmPassword')}
-                                            onSubmitEditing={handleSubmit}
-                                            style={touched.confirmPassword && errors.confirmPassword ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.confirmPassword && errors.confirmPassword} />
-                                    </View>
+                                            <View>
+                                                <Label>Confirmar senha</Label>
+                                                <FormInput
+                                                    placeholder="Confirme a senha"
+                                                    secureTextEntry={true}
+                                                    textContentType="password"
+                                                    returnKeyType="send"
+                                                    value={values.confirmPassword}
+                                                    onChangeText={handleChange('confirmPassword')}
+                                                    onBlur={handleBlur('confirmPassword')}
+                                                    onSubmitEditing={handleSubmit}
+                                                    style={touched.confirmPassword && errors.confirmPassword ?
+                                                        { borderBottomColor: 'red' }
+                                                        : { borderBottomColor: Colors.inputBorderBottom }}
+                                                />
+                                                <ErrorMessage errorValue={touched.confirmPassword && errors.confirmPassword} />
+                                            </View>
+                                        </>
+                                    }
+
                                 </Fragment>
                             )}
                     </Formik>

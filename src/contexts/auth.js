@@ -38,10 +38,10 @@ export const AuthProvider = ({ children }) => {
 
     }, []);
 
-    const signIn = async (userType, user, password) => {
+    const signIn = async (userType, email, password) => {
         setLoading(true);
         return new Promise((resolve, reject) => {
-            autenticar(userType, user, password)
+            autenticar(userType, email, password)
             .then(async ({ data }) => {
                 setUser(data.user);
                 setUserType(userType);

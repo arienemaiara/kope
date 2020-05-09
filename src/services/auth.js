@@ -1,17 +1,11 @@
 import api from './api';
 
-export function autenticar(userType, user, password) {
+export function autenticar(userType, email, password) {
 
-	if (userType === 'cliente') {
-		return api.post('/clientes/login', {
-			cpf: user,
-			password
-		});
-	}
-	else {
-		return api.post('/estabelecimentos/login', {
-			cpf_cnpj: user,
-			password
-		});
-	}
+	const url = userType === 'cliente' ? '/clientes/login' : '/estabelecimentos/login';
+
+	return api.post(url, {
+		email,
+		password
+	});
 }

@@ -6,6 +6,8 @@ import Page from '../../components/Page';
 import Layout from '../../constants/Layout';
 import AuthContext from '../../contexts/auth';
 
+import { DefaultText } from '../../components/StyledComponents';
+
 const QRCodeScreen = props => {
 
     const { user } = useContext(AuthContext);
@@ -14,7 +16,10 @@ const QRCodeScreen = props => {
         <Page
             title="Acúmulo ou Resgate de pontos">
             <View style={styles.container}>
-                <Text>Mostre o QR code ao estabelecimento para fazer o acúmulo ou resgate de pontos</Text>
+                <DefaultText fontSize={20} style={styles.text}>
+                    Mostre o QR code ao estabelecimento para fazer o 
+                    acúmulo ou resgate de pontos.
+                </DefaultText>
                 <QRCode
                     value={user.cpf}
                     size={250}
@@ -28,9 +33,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         height: Layout.window.height - 90 - 150,
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        padding: 15
+    },
+    text: {
+        textAlign: 'center'
     }
 });
 

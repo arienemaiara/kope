@@ -17,6 +17,8 @@ import EnderecoList from '../../components/estabelecimento/EnderecoList';
 import * as EstabelecimentoService from '../../services/estabelecimento';
 import AuthContext from '../../contexts/auth';
 
+import { validationShapeCadastro } from '../../utils/validationShape';
+
 const CadastroScreen = props => {
 
     const [initialValues, setInitialValues] = useState({
@@ -36,6 +38,7 @@ const CadastroScreen = props => {
             estado: ''
         }]
     });
+    const [mascaraCpfCnpj, setMascaraCpfCnpj] = useState('cpf');
 
     const { signIn } = useContext(AuthContext);
     const estabelecimento = props.route?.params?.estabelecimento;
@@ -45,8 +48,19 @@ const CadastroScreen = props => {
     let cpfInputRef;
     let telefoneInputRef;
 
+    let validationShape = validationShapeCadastro(editMode);
+    validationShape = {
+        ...validationShape,
+        cpf_cnpj: Yup.string()
+            .required('Informe o CPF ou CNPJ')
+            .test('cpf-valido', 'Informe um CPF ou CNPJ válido', (val) => {
+                return cpfInputRef.isValid();
+            }),
+    }
+    const validationSchema = Yup.object().shape(validationShape);
+
+
     const onSaveButtonPressed = () => {
-        console.tron.log(enderecoListRef.current);
         if (formRef.current && enderecoListRef.current) {
             formRef.current.handleSubmit();
             enderecoListRef.current.handleSubmit();
@@ -54,13 +68,23 @@ const CadastroScreen = props => {
     }
 
     const handleSave = (values) => { 
-        console.tron.log(enderecoListRef);
+        console.tron.log(formRef);
+    }
+
+    const verificarMascaraCpfCnpj = (values) => {
+        const len = cpfInputRef.getRawValue().length;
+        if (len < 11) {
+            setMascaraCpfCnpj('cpf');
+        }
+        else {
+            setMascaraCpfCnpj('cnpj');
+        }
     }
 
     return (
         <Container>
             <Page
-                title={editMode ? 'Editar dados pessoais' : 'Cadastre-se'}
+                title={editMode ? 'Editar dados pessoais' : 'Cadastre seu Estabelecimento'}
                 headerBackButton={
                     <HeaderButton
                         iconName='arrow-left'
@@ -74,6 +98,7 @@ const CadastroScreen = props => {
                         initialValues={initialValues}
                         enableReinitialize={true}
                         onSubmit={values => handleSave(values)}
+                        validationSchema={validationSchema}
                         innerRef={formRef}
                     >
                         {({
@@ -88,11 +113,12 @@ const CadastroScreen = props => {
                                     <View>
                                         <Label>CPF/CNPJ</Label>
                                         <MaskedInput
-                                            type="cpf"
+                                            type={mascaraCpfCnpj}
                                             placeholder="Digite seu CPF ou CNPJ"
                                             keyboardType="numeric"
                                             returnKeyType="next"
                                             value={values.cpf_cnpj}
+                                            onChange={verificarMascaraCpfCnpj}
                                             onChangeText={handleChange('cpf_cnpj')}
                                             onBlur={handleBlur('cpf_cnpj')}
                                             editable={!editMode}
@@ -135,10 +161,10 @@ const CadastroScreen = props => {
                                         <ErrorMessage errorValue={touched.email && errors.email} />
                                     </View>
                                     <View>
-                                        <Label>Celular</Label>
+                                        <Label>Telefone</Label>
                                         <MaskedInput
                                             type='cel-phone'
-                                            placeholder="Digite seu celular"
+                                            placeholder="Digite seu telefone"
                                             keyboardType="numeric"
                                             returnKeyType="next"
                                             value={values.telefone}

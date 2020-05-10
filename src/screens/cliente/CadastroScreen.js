@@ -17,7 +17,7 @@ import Colors from '../../constants/Colors';
 import * as ClienteService from '../../services/cliente';
 import AuthContext from '../../contexts/auth';
 
-import { validationShapeCliente } from '../../utils/validationShape';
+import { validationShapeCadastro } from '../../utils/validationShape';
 
 const CadastroScreen = props => {
 
@@ -34,7 +34,7 @@ const CadastroScreen = props => {
     const formRef = useRef();
     let cpfInputRef;
     let telefoneInputRef;
-    let validationShape = validationShapeCliente(editMode, cpfInputRef);
+    let validationShape = validationShapeCadastro(editMode);
     validationShape = {
         ...validationShape,
         cpf: Yup.string()

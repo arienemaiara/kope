@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const validationShapeCliente = (edit = false) => {
+export const validationShapeCadastro = (edit = false) => {
     let validationShape = {
         nome: Yup.string()
             .required('Informe o nome completo')

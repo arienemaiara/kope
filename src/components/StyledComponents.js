@@ -139,6 +139,7 @@ export const Row = styled.View`
 
 export const Column = styled.View`
     flex-direction: column;
+    padding: ${props => props.padding ? props.padding + 'px' : '0px'};
 `;
 
 export const ItemLista = styled.TouchableOpacity`

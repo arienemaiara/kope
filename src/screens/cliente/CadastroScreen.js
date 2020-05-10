@@ -149,116 +149,116 @@ const CadastroScreen = props => {
                             touched,
                             handleSubmit
                         }) => (
-                                <Fragment>
-                                    <View>
-                                        <Label>CPF</Label>
-                                        <MaskedInput
-                                            type="cpf"
-                                            placeholder="Digite seu CPF"
-                                            keyboardType="numeric"
-                                            returnKeyType="next"
-                                            value={values.cpf}
-                                            onChangeText={handleChange('cpf')}
-                                            onBlur={handleBlur('cpf')}
-                                            editable={!editMode}
-                                            ref={(ref) => cpfInputRef = ref}
-                                            style={touched.cpf && errors.cpf ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }} />
+                            <Fragment>
+                                <View>
+                                    <Label>CPF</Label>
+                                    <MaskedInput
+                                        type="cpf"
+                                        placeholder="Digite seu CPF"
+                                        keyboardType="numeric"
+                                        returnKeyType="next"
+                                        value={values.cpf}
+                                        onChangeText={handleChange('cpf')}
+                                        onBlur={handleBlur('cpf')}
+                                        editable={!editMode}
+                                        ref={(ref) => cpfInputRef = ref}
+                                        style={touched.cpf && errors.cpf ?
+                                            { borderBottomColor: 'red' }
+                                            : { borderBottomColor: Colors.inputBorderBottom }} />
 
-                                        <ErrorMessage errorValue={touched.cpf && errors.cpf} />
-                                    </View>
-                                    <View>
-                                        <Label>Nome Completo</Label>
-                                        <FormInput
-                                            placeholder="Digite seu nome"
-                                            autoCorrect="false"
-                                            returnKeyType="next"
-                                            value={values.nome}
-                                            onChangeText={handleChange('nome')}
-                                            onBlur={handleBlur('nome')}
-                                            style={touched.nome && errors.nome ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.nome && errors.nome} />
-                                    </View>
-                                    <View>
-                                        <Label>E-mail</Label>
-                                        <FormInput
-                                            placeholder="Digite seu e-mail"
-                                            autoCapitalize="none"
-                                            keyboardType="email-address"
-                                            returnKeyType="next"
-                                            value={values.email}
-                                            onChangeText={handleChange('email')}
-                                            onBlur={handleBlur('email')}
-                                            style={touched.email && errors.email ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.email && errors.email} />
-                                    </View>
+                                    <ErrorMessage errorValue={touched.cpf && errors.cpf} />
+                                </View>
+                                <View>
+                                    <Label>Nome Completo</Label>
+                                    <FormInput
+                                        placeholder="Digite seu nome"
+                                        autoCorrect="false"
+                                        returnKeyType="next"
+                                        value={values.nome}
+                                        onChangeText={handleChange('nome')}
+                                        onBlur={handleBlur('nome')}
+                                        style={touched.nome && errors.nome ?
+                                            { borderBottomColor: 'red' }
+                                            : { borderBottomColor: Colors.inputBorderBottom }}
+                                    />
+                                    <ErrorMessage errorValue={touched.nome && errors.nome} />
+                                </View>
+                                <View>
+                                    <Label>E-mail</Label>
+                                    <FormInput
+                                        placeholder="Digite seu e-mail"
+                                        autoCapitalize="none"
+                                        keyboardType="email-address"
+                                        returnKeyType="next"
+                                        value={values.email}
+                                        onChangeText={handleChange('email')}
+                                        onBlur={handleBlur('email')}
+                                        style={touched.email && errors.email ?
+                                            { borderBottomColor: 'red' }
+                                            : { borderBottomColor: Colors.inputBorderBottom }}
+                                    />
+                                    <ErrorMessage errorValue={touched.email && errors.email} />
+                                </View>
 
-                                    <View>
-                                        <Label>Celular</Label>
-                                        <MaskedInput
-                                            type='cel-phone'
-                                            placeholder="Digite seu celular"
-                                            keyboardType="numeric"
-                                            returnKeyType="next"
-                                            value={values.telefone}
-                                            onChangeText={handleChange('telefone')}
-                                            onBlur={handleBlur('telefone')}
-                                            ref={(ref) => telefoneInputRef = ref}
-                                            style={touched.telefone && errors.telefone ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }} />
+                                <View>
+                                    <Label>Celular</Label>
+                                    <MaskedInput
+                                        type='cel-phone'
+                                        placeholder="Digite seu celular"
+                                        keyboardType="numeric"
+                                        returnKeyType="next"
+                                        value={values.telefone}
+                                        onChangeText={handleChange('telefone')}
+                                        onBlur={handleBlur('telefone')}
+                                        ref={(ref) => telefoneInputRef = ref}
+                                        style={touched.telefone && errors.telefone ?
+                                            { borderBottomColor: 'red' }
+                                            : { borderBottomColor: Colors.inputBorderBottom }} />
 
-                                        <ErrorMessage errorValue={touched.telefone && errors.telefone} />
-                                    </View>
+                                    <ErrorMessage errorValue={touched.telefone && errors.telefone} />
+                                </View>
 
-                                    {!editMode &&
-                                        <>
-                                            <View>
-                                                <Label>Senha</Label>
-                                                <FormInput
-                                                    placeholder="Digite sua senha"
-                                                    secureTextEntry={true}
-                                                    textContentType="password"
-                                                    returnKeyType="next"
-                                                    value={values.password}
-                                                    onChangeText={handleChange('password')}
-                                                    onBlur={handleBlur('password')}
-                                                    style={touched.password && errors.password ?
-                                                        { borderBottomColor: 'red' }
-                                                        : { borderBottomColor: Colors.inputBorderBottom }}
-                                                />
-                                                <ErrorMessage errorValue={touched.password && errors.password} />
-                                            </View>
+                                {!editMode &&
+                                    <>
+                                        <View>
+                                            <Label>Senha</Label>
+                                            <FormInput
+                                                placeholder="Digite sua senha"
+                                                secureTextEntry={true}
+                                                textContentType="password"
+                                                returnKeyType="next"
+                                                value={values.password}
+                                                onChangeText={handleChange('password')}
+                                                onBlur={handleBlur('password')}
+                                                style={touched.password && errors.password ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }}
+                                            />
+                                            <ErrorMessage errorValue={touched.password && errors.password} />
+                                        </View>
 
-                                            <View>
-                                                <Label>Confirmar senha</Label>
-                                                <FormInput
-                                                    placeholder="Confirme a senha"
-                                                    secureTextEntry={true}
-                                                    textContentType="password"
-                                                    returnKeyType="send"
-                                                    value={values.confirmPassword}
-                                                    onChangeText={handleChange('confirmPassword')}
-                                                    onBlur={handleBlur('confirmPassword')}
-                                                    onSubmitEditing={handleSubmit}
-                                                    style={touched.confirmPassword && errors.confirmPassword ?
-                                                        { borderBottomColor: 'red' }
-                                                        : { borderBottomColor: Colors.inputBorderBottom }}
-                                                />
-                                                <ErrorMessage errorValue={touched.confirmPassword && errors.confirmPassword} />
-                                            </View>
-                                        </>
-                                    }
+                                        <View>
+                                            <Label>Confirmar senha</Label>
+                                            <FormInput
+                                                placeholder="Confirme a senha"
+                                                secureTextEntry={true}
+                                                textContentType="password"
+                                                returnKeyType="send"
+                                                value={values.confirmPassword}
+                                                onChangeText={handleChange('confirmPassword')}
+                                                onBlur={handleBlur('confirmPassword')}
+                                                onSubmitEditing={handleSubmit}
+                                                style={touched.confirmPassword && errors.confirmPassword ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }}
+                                            />
+                                            <ErrorMessage errorValue={touched.confirmPassword && errors.confirmPassword} />
+                                        </View>
+                                    </>
+                                }
 
-                                </Fragment>
-                            )}
+                            </Fragment>
+                        )}
                     </Formik>
                 </View>
             </Page>

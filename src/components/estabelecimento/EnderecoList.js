@@ -48,11 +48,6 @@ const EnderecoList = (props, ref) => {
             .required('Deve ser incluído pelo menos 1 endereço')
     });
 
-    const handleSave = (values) => {
-        console.tron.log('handleSave')
-        console.tron.log(values)
-    }
-
     const renderBorderColor = (errors, touched, name) => {
         const error = getIn(errors, name);
         const touch = getIn(touched, name);
@@ -74,6 +69,10 @@ const EnderecoList = (props, ref) => {
           }}
         </Field>
     );
+
+    const handleSave = (values) => {
+        
+    }
 
     return (
         <Formik

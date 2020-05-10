@@ -59,18 +59,6 @@ const CadastroScreen = props => {
     }
     const validationSchema = Yup.object().shape(validationShape);
 
-
-    const onSaveButtonPressed = () => {
-        if (formRef.current && enderecoListRef.current) {
-            formRef.current.handleSubmit();
-            enderecoListRef.current.handleSubmit();
-        }
-    }
-
-    const handleSave = (values) => { 
-        console.tron.log(formRef);
-    }
-
     const verificarMascaraCpfCnpj = (values) => {
         const len = cpfInputRef.getRawValue().length;
         if (len < 11) {
@@ -80,6 +68,50 @@ const CadastroScreen = props => {
             setMascaraCpfCnpj('cnpj');
         }
     }
+
+    const onSaveButtonPressed = () => {
+        if (formRef.current && enderecoListRef.current) {
+            formRef.current.handleSubmit();
+            enderecoListRef.current.handleSubmit();
+        }
+    }
+
+    const handleSave = (values) => { 
+        if (enderecoListRef.current.isValid) {
+            let formData = values;
+            formData.cpf_cnpj = cpfInputRef.getRawValue();
+            formData.telefone = telefoneInputRef.getRawValue();
+            let { enderecos } = enderecoListRef.current.values;
+            formData.enderecos = enderecos;
+            console.tron.log(formData);
+            if (editMode === false) {
+                cadastrarEstabelecimento(formData);
+            }
+            else {
+                editarEstabelecimento(formData);
+            }
+        }
+    }
+
+    const cadastrarEstabelecimento = (formData) => {
+        EstabelecimentoService.cadastrar(formData)
+            .then((response) => {
+                signIn('estabelecimento', formData.email, formData.password)
+            })
+            .catch((error) => {
+                const errorData = error.response.data;
+                if (error.response.status === 500) {
+                    Alert.alert('Erro', 'Erro interno do servidor')
+                }
+                else if (errorData.messages) {
+                    Alert.alert('Erro', errorData.messages)
+                }
+            })
+    } 
+
+    const editarEstabelecimento = () => {
+
+    } 
 
     return (
         <Container>

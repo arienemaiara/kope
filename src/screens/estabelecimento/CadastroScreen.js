@@ -49,15 +49,29 @@ const CadastroScreen = props => {
     let telefoneInputRef;
 
     let validationShape = validationShapeCadastro(editMode);
-    validationShape = {
-        ...validationShape,
-        cpf_cnpj: Yup.string()
-            .required('Informe o CPF ou CNPJ')
-            .test('cpf-valido', 'Informe um CPF ou CNPJ válido', (val) => {
-                return cpfInputRef.isValid();
-            }),
+    if (editMode === false) {
+        validationShape = {
+            ...validationShape,
+            cpf_cnpj: Yup.string()
+                .required('Informe o CPF ou CNPJ')
+                .test('cpf-valido', 'Informe um CPF ou CNPJ válido', (val) => {
+                    return cpfInputRef.isValid();
+                }),
+        }
     }
     const validationSchema = Yup.object().shape(validationShape);
+
+    useEffect(() => {
+        if (editMode === true) {
+            EstabelecimentoService.detalhe()
+                .then((response) => {
+                    setInitialValues(response.data);
+                })
+                .catch((error) => {
+                    Alert.alert('Erro', 'Erro ao buscar os dados cadastrados');
+                })
+        }
+    }, []);
 
     const verificarMascaraCpfCnpj = (values) => {
         const len = cpfInputRef.getRawValue().length;
@@ -76,7 +90,7 @@ const CadastroScreen = props => {
         }
     }
 
-    const handleSave = (values) => { 
+    const handleSave = (values) => {
         if (enderecoListRef.current.isValid) {
             let formData = values;
             formData.cpf_cnpj = cpfInputRef.getRawValue();
@@ -107,11 +121,29 @@ const CadastroScreen = props => {
                     Alert.alert('Erro', errorData.messages)
                 }
             })
-    } 
+    }
 
-    const editarEstabelecimento = () => {
-
-    } 
+    const editarEstabelecimento = (formData) => {
+        EstabelecimentoService.atualizar(formData)
+            .then((response) => {
+                Alert.alert(
+                    'Sucesso',
+                    'Dados atualizados',
+                    [{
+                        text: 'OK',
+                        onPress: () => props.navigation.goBack()
+                    }]);
+            })
+            .catch((error) => {
+                const errorData = error.response.data;
+                if (error.response.status === 500) {
+                    Alert.alert('Erro', 'Erro interno do servidor')
+                }
+                else if (errorData.messages) {
+                    Alert.alert('Erro', errorData.messages)
+                }
+            })
+    }
 
     return (
         <Container>
@@ -252,7 +284,7 @@ const CadastroScreen = props => {
                     </Formik>
                 </View>
                 <View>
-                    <EnderecoList 
+                    <EnderecoList
                         enderecos={initialValues.enderecos}
                         ref={enderecoListRef}
                     />

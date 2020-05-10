@@ -10,12 +10,12 @@ import AuthContext from '../../contexts/auth';
 
 const ConfiguracoesScreen = ({ navigation }) => {
 
-    const { signOut } = useContext(AuthContext);
+    const { signOut, user } = useContext(AuthContext);
 
     return (
         <Page title="Configurações">
             <ItemLista
-                onPress={() => { navigation.navigate('Cadastro') }}
+                onPress={() => { navigation.navigate('Cadastro', { estabelecimento: user }) }}
                 flexRow={true}>
                 <Feather name="user" style={styles.icon} />
                 <DefaultText fontSize={16}>Editar Perfil</DefaultText>

@@ -12,6 +12,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 
 import Page from '../../components/Page';
+import SemRegistros from '../../components/SemRegistros';
 import Colors from '../../constants/Colors';
 import { InfoText, ListText, DefaultInput, ItemLista } from '../../components/StyledComponents';
 import { converterDistanciaKM } from '../../utils/helpers';
@@ -50,6 +51,23 @@ const EstabelecimentosScreen = ({ navigation }) => {
             })
     }
 
+    const renderLista = () => {
+        if (!enderecosLista || enderecosLista.length === 0) {
+            return (
+                <SemRegistros message='Nenhum estabelecimento encontrado' />
+            )
+        }
+        else {
+            return (
+                <FlatList
+                    data={enderecosLista}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({ item }) => renderItem(item)} />
+            )
+        }
+        
+    }
+
     const renderItem = (item) => {
         const { estabelecimento } = item;
         return (
@@ -76,10 +94,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
                     placeholder="Procurar estabelecimento"
                     style={styles.buscarText} />
             </View>
-            <FlatList
-                data={enderecosLista}
-                keyExtractor={(item) => item.id}
-                renderItem={({ item }) => renderItem(item)} />
+            { renderLista() }
         </Page>
     );
 };

@@ -9,7 +9,11 @@ import RecompensasCadastroScreen from '../screens/estabelecimento/recompensas/Re
 import ResgatesScreen from '../screens/estabelecimento/ResgatesScreen';
 import ConfiguracoesScreen from '../screens/estabelecimento/ConfiguracoesScreen';
 import CadastroScreen from '../screens/estabelecimento/CadastroScreen';
+
 import LerQRCodeScreen from '../screens/estabelecimento/LerQRCodeScreen';
+import DadosClienteScreen from '../screens/estabelecimento/movimentacao/DadosClienteScreen';
+import SelecaoRecompensaScreen from '../screens/estabelecimento/movimentacao/SelecaoRecompensaScreen';
+import ConfirmacaoScreen from '../screens/estabelecimento/movimentacao/ConfirmacaoScreen';
 import Colors from '../constants/Colors';
 
 const BottomTab = createBottomTabNavigator();
@@ -24,6 +28,20 @@ function Recompensas() {
             }}>
             <Stack.Screen name="RecompensasLista" component={RecompensasListaScreen} />
             <Stack.Screen name="RecompensasCadastro" component={RecompensasCadastroScreen} />
+        </Stack.Navigator>
+    )
+}
+
+function Movimentacoes() {
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false
+            }}>
+            <Stack.Screen name="QRCode" component={LerQRCodeScreen} />
+            <Stack.Screen name="DadosCliente" component={DadosClienteScreen} />
+            <Stack.Screen name="SelecaoRecompensa" component={SelecaoRecompensaScreen} />
+            <Stack.Screen name="Confirmacao" component={ConfirmacaoScreen} />
         </Stack.Navigator>
     )
 }
@@ -74,8 +92,8 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                 }}
             />
             <BottomTab.Screen
-                name="QRCode"
-                component={LerQRCodeScreen}
+                name="Movimentacoes"
+                component={Movimentacoes}
                 options={{
                     title: "Ler QRCode",
                     tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="plus-circle" />,

@@ -14,7 +14,7 @@ const QRCodeScreen = props => {
 
     return (
         <Page
-            title="Acúmulo ou Resgate de pontos">
+            title="Acúmulo/Resgate de pontos">
             <View style={styles.container}>
                 <DefaultText fontSize={20} style={styles.text}>
                     Mostre o QR code ao estabelecimento para fazer o 

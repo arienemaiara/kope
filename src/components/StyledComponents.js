@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
 import { TextInputMask } from 'react-native-masked-text'
+import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 
 //------------------- TEXTS ----------------------
@@ -88,10 +89,6 @@ export const ButtonTransparent = props => (
     </ButtonTransparentContainer>
 );
 
-//------------------- ICON BUTTON ----------------------
-export const HeaderIconButton = styled.TouchableOpacity`
-
-`;
 
 //------------------- INPUTS ----------------------
 const DefaultInputCSS = css`
@@ -123,6 +120,15 @@ export const MaskedInput = styled(TextInputMask)`
 `;
 
 //------------------- VIEWS ----------------------
+export const FullContainer = styled.View`
+    flex: 1;
+    height: ${Layout.window.height - 90 - 150};
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #fff;
+    padding: 15px;
+`;
+
 export const Container = styled.KeyboardAvoidingView.attrs({
     enabled: Platform.OS === 'ios',
     behavior: 'padding'
@@ -148,4 +154,11 @@ export const ItemLista = styled.TouchableOpacity`
     border-bottom-color: ${Colors.listSeparator};
     flex-direction: ${props => props.flexRow ? 'row' : 'column'};
     align-items: flex-start;
+`;
+
+export const ShadowBox = styled.View`
+    border-radius: 5px; 
+    padding: 10px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.27);
+    background-color: #fff;
 `;

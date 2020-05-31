@@ -11,6 +11,7 @@ import {
     Image,
     StatusBar
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import AuthContext from '../contexts/auth';
 import {
@@ -27,6 +28,7 @@ import ErrorMessage from '../components/ErrorMessage';
 
 const LoginScreen = props => {
 
+    const [carregando, setCarregando] = useState(false);
     const [tipoUsuario, setTipoUsuario] = useState('cliente');
 
     const { signIn } = useContext(AuthContext);
@@ -42,11 +44,15 @@ const LoginScreen = props => {
     });
 
     const handleLogin = (formValues) => {
+        setCarregando(true);
         const email = formValues.email;
         const senha = formValues.senha;
         signIn(tipoUsuario, email, senha)
             .catch((error) => {
                 Alert.alert('Erro', error);
+            })
+            .finally(() => {
+                setCarregando(false);
             });
     }
 
@@ -137,6 +143,7 @@ const LoginScreen = props => {
     return (
         <Background>
             <StatusBar barStyle="dark-content" />
+            <Spinner visible={carregando} />
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Container style={styles.container}>
                     <View style={styles.logoImageContainer}>

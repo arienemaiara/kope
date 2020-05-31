@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
     View,
     StyleSheet
@@ -14,6 +15,7 @@ const SemRegistros = props => {
     return (
         <View style={styles.container}>
             <DefaultText style={styles.text}>{props.message}</DefaultText>
+            {props.children}
         </View>
     )
 };
@@ -28,5 +30,9 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     }
 });
+
+SemRegistros.propTypes = {
+    message: PropTypes.string.isRequired
+}
 
 export default SemRegistros;

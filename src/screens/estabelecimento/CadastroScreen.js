@@ -2,6 +2,7 @@ import React, { Fragment, useRef, createRef, useContext, useEffect, useState } f
 import * as Yup from 'yup';
 import { Formik, FieldArray } from 'formik';
 import { View, Alert, StyleSheet } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import Page from '../../components/Page';
 import HeaderButton from '../../components/header/HeaderButton';
@@ -21,6 +22,7 @@ import { validationShapeCadastro } from '../../utils/validationShape';
 
 const CadastroScreen = props => {
 
+    const [carregando, setCarregando] = useState(false);
     const [initialValues, setInitialValues] = useState({
         cpf_cnpj: '',
         nome: '',
@@ -63,12 +65,16 @@ const CadastroScreen = props => {
 
     useEffect(() => {
         if (editMode === true) {
+            setCarregando(true);
             EstabelecimentoService.detalhe()
                 .then((response) => {
                     setInitialValues(response.data);
                 })
                 .catch((error) => {
                     Alert.alert('Erro', 'Erro ao buscar os dados cadastrados');
+                })
+                .finally(() => {
+                    setCarregando(false);
                 })
         }
     }, []);
@@ -92,6 +98,7 @@ const CadastroScreen = props => {
 
     const handleSave = (values) => {
         if (enderecoListRef.current.isValid) {
+            setCarregando(true);
             let formData = values;
             formData.cpf_cnpj = cpfInputRef.getRawValue();
             formData.telefone = telefoneInputRef.getRawValue();
@@ -110,9 +117,11 @@ const CadastroScreen = props => {
     const cadastrarEstabelecimento = (formData) => {
         EstabelecimentoService.cadastrar(formData)
             .then((response) => {
+                setCarregando(false);
                 signIn('estabelecimento', formData.email, formData.password)
             })
             .catch((error) => {
+                setCarregando(false);
                 const errorData = error.response.data;
                 if (error.response.status === 500) {
                     Alert.alert('Erro', 'Erro interno do servidor')
@@ -126,6 +135,7 @@ const CadastroScreen = props => {
     const editarEstabelecimento = (formData) => {
         EstabelecimentoService.atualizar(formData)
             .then((response) => {
+                setCarregando(false);
                 Alert.alert(
                     'Sucesso',
                     'Dados atualizados',
@@ -135,6 +145,7 @@ const CadastroScreen = props => {
                     }]);
             })
             .catch((error) => {
+                setCarregando(false);
                 const errorData = error.response.data;
                 if (error.response.status === 500) {
                     Alert.alert('Erro', 'Erro interno do servidor')
@@ -157,6 +168,9 @@ const CadastroScreen = props => {
                 headerRightButton={
                     <HeaderButton iconName='save' onPress={onSaveButtonPressed} />
                 }>
+
+                <Spinner visible={carregando} />
+
                 <View style={styles.container}>
                     <Formik
                         initialValues={initialValues}

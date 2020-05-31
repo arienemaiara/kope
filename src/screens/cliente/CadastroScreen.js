@@ -2,6 +2,7 @@ import React, { Fragment, useRef, useContext, useEffect, useState } from 'react'
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { View, Alert, StyleSheet } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import Page from '../../components/Page';
 import HeaderButton from '../../components/header/HeaderButton';
@@ -21,6 +22,7 @@ import { validationShapeCadastro } from '../../utils/validationShape';
 
 const CadastroScreen = props => {
 
+    const [carregando, setCarregando] = useState(false);
     const [initialValues, setInitialValues] = useState({
         cpf: '',
         nome: '',
@@ -49,6 +51,7 @@ const CadastroScreen = props => {
 
     useEffect(() => {
         if (editMode === true) {
+            setCarregando(true);
             ClienteService.detalhe()
                 .then((response) => {
                     setInitialValues(response.data);
@@ -56,6 +59,9 @@ const CadastroScreen = props => {
                 .catch((error) => {
                     Alert.alert('Erro', 'Erro ao buscar os dados cadastrados');
                 })
+                .finally(() => {
+                    setCarregando(false);
+                });
         }
     }, []);
 
@@ -66,6 +72,7 @@ const CadastroScreen = props => {
     }
 
     const handleSave = (values) => {
+        setCarregando(true);
         const formData = values;
         formData.cpf = cpfInputRef.getRawValue();
         formData.telefone = telefoneInputRef.getRawValue();
@@ -95,6 +102,9 @@ const CadastroScreen = props => {
                 else if (errorData.messages) {
                     Alert.alert('Erro', errorData.messages)
                 }
+            })
+            .finally(() => {
+                setCarregando(false);
             });
     }
 
@@ -117,6 +127,9 @@ const CadastroScreen = props => {
                 else if (errorData.messages) {
                     Alert.alert('Erro', errorData.messages)
                 }
+            })
+            .finally(() => {
+                setCarregando(false);
             });
     }
 
@@ -132,8 +145,11 @@ const CadastroScreen = props => {
                 headerRightButton={
                     <HeaderButton iconName='save' onPress={onSaveButtonPressed} />
                 }>
-                <View style={styles.container}>
 
+                <Spinner visible={carregando} />
+
+                <View style={styles.container}>
+                
                     <Formik
                         initialValues={initialValues}
                         enableReinitialize={true}
@@ -172,7 +188,7 @@ const CadastroScreen = props => {
                                     <Label>Nome Completo</Label>
                                     <FormInput
                                         placeholder="Digite seu nome"
-                                        autoCorrect="false"
+                                        autoCorrect={false}
                                         returnKeyType="next"
                                         value={values.nome}
                                         onChangeText={handleChange('nome')}

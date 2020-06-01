@@ -28,6 +28,7 @@ const LerQRCodeScreen = props => {
     const [scanned, setScanned] = useState(false);
 
     const title = acumuloPontos ? 'Acumular pontos do cliente' : 'Resgatar pontos do cliente';
+    let cpfInputRef;
 
     useEffect(() => {
         (async () => {
@@ -99,11 +100,12 @@ const LerQRCodeScreen = props => {
                         style={{ marginBottom: 10 }}
                         value={cpfCliente}
                         onChangeText={(value) => setCpfCliente(value)}
+                        ref={(ref) => cpfInputRef = ref}
                     />
                     <DefaultButton
                         title="Confirmar"
                         backgroundColor={Colors.bgBtnSuccess}
-                        onPress={() => confirmarCPFCliente(cpfCliente) }
+                        onPress={() => confirmarCPFCliente(cpfInputRef.getRawValue()) }
                     />
                 </ShadowBox>
             }

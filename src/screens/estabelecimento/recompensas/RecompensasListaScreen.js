@@ -20,7 +20,7 @@ const RecompensasListaScreen = props => {
     const [isRefreshing, setIsRefreshing] = useState(false);
 
     const { user } = useContext(AuthContext);
-    const { recompensasLista, carregarRecompensas } = useContext(RecompensaContext);
+    const { recompensasLista, carregarRecompensas, loading } = useContext(RecompensaContext);
 
     useEffect(() => {
         carregarRecompensas(1);
@@ -64,7 +64,7 @@ const RecompensasListaScreen = props => {
                 <HeaderButton iconName='plus' onPress={onAddHandler} />
             }>
 
-            <Spinner visible={false} />
+            <Spinner visible={loading} />
 
             { renderListaRecompensas() }
 

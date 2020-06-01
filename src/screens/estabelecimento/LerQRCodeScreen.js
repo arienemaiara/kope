@@ -1,21 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Alert, StyleSheet } from 'react-native';
+import { 
+    View, 
+    Button,
+    TouchableOpacity,
+    Text, 
+    Alert, 
+    StyleSheet 
+} from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import Page from '../../components/Page';
-import { 
-    FullContainer, 
+import {
     ShadowBox,
     Label,
-    MaskedInput, 
+    MaskedInput,
     ButtonTransparent,
-    DefaultButton } from '../../components/StyledComponents';
+    DefaultButton
+} from '../../components/StyledComponents';
 import Colors from '../../constants/Colors';
 
 const LerQRCodeScreen = props => {
 
     const [acumuloPontos, setAcumuloPontos] = useState(true);
-    const [exibirInputCliente, setExibirInputCliente] = useState(true);
+    const [informarClienteManual, setInformarClienteManual] = useState(false);
     const [cpfCliente, setCpfCliente] = useState();
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
@@ -30,8 +37,8 @@ const LerQRCodeScreen = props => {
     }, []);
 
     const handleBarCodeScanned = ({ type, data }) => {
-        setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        setCpfCliente(data);
+        confirmarCPFCliente(data);
     };
 
     if (hasPermission === null) {
@@ -41,12 +48,13 @@ const LerQRCodeScreen = props => {
         return <Text>No access to camera</Text>;
     }
 
-    const confirmarCPFCliente = () => {
-        if (!cpfCliente) {
-            Alert.alert('Erro', 'Informe o CPF do cliente para prosseguir.')
+    const confirmarCPFCliente = (cpf) => {
+        if (!cpf) {
+            Alert.alert('Erro', 'Informe o CPF do cliente para prosseguir.');
+            //setScanned(false);
         }
         else {
-            //props.navigation.navigate('DadosCliente', { cpf_cliente: cpfCliente });
+            //setScanned(true);
             if (acumuloPontos) {
                 acumularPontosCliente();
             }
@@ -57,64 +65,97 @@ const LerQRCodeScreen = props => {
     }
 
     const acumularPontosCliente = () => {
-
+        props.navigation.navigate('AcumuloPontos', { cpf_cliente: cpfCliente });
     }
 
     const resgatarPontosCliente = () => {
 
     }
- 
-    return (
-        <Page title={title}>
-            <FullContainer style={{justifyContent: 'space-between'}}>
-                <View>
 
-                </View>
-                <View>
-                    <ButtonTransparent
-                        title="Informar cliente manualmente"
-                        titleSize={20}
-                        color={Colors.purpleText}
-                    />
-                    {
-                        exibirInputCliente &&
-                        <ShadowBox>
-                            <Label>CPF</Label>
-                            <MaskedInput 
-                                type="cpf"
-                                placeholder="Informe o CPF do cliente"
-                                style={{marginBottom: 10}}
-                                value={cpfCliente}
-                                onChangeText={(value) => setCpfCliente(value)}
-                            />
-                            <DefaultButton 
-                                title="Confirmar"
-                                backgroundColor={Colors.bgBtnSuccess}
-                                onPress={confirmarCPFCliente}
-                            />
-                        </ShadowBox>
-                    }
-                    
-                </View>
-                <View>
-                    <ButtonTransparent
-                        title={acumuloPontos ? "Efetuar resgate de pontos" : "Efetuar acúmulo de pontos"}
-                        titleSize={20}
-                        color={Colors.purpleText}
-                        onPress={() => setAcumuloPontos(!acumuloPontos)}
-                    />
-                </View>
-            </FullContainer>
-            {/* <BarCodeScanner
-                onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+    return (
+
+        <Page title={title} headerHeight={100}>
+
+            <ButtonTransparent
+                title={informarClienteManual ? "Escanear QRCode cliente" : "Informar cliente manualmente"}
+                titleSize={20}
+                color={Colors.purpleText}
+                onPress={() => setInformarClienteManual(!informarClienteManual)}
             />
 
-            {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
+            {!informarClienteManual ?
+                <View style={styles.barcodeContainer}>
+                    <BarCodeScanner
+                        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+                        style={StyleSheet.absoluteFillObject}
+                    />
+                </View>
+                : 
+                <ShadowBox>
+                    <Label>CPF</Label>
+                    <MaskedInput
+                        type="cpf"
+                        placeholder="Informe o CPF do cliente"
+                        style={{ marginBottom: 10 }}
+                        value={cpfCliente}
+                        onChangeText={(value) => setCpfCliente(value)}
+                    />
+                    <DefaultButton
+                        title="Confirmar"
+                        backgroundColor={Colors.bgBtnSuccess}
+                        onPress={() => confirmarCPFCliente(cpfCliente) }
+                    />
+                </ShadowBox>
+            }
+            <View style={styles.buttonGroup}>
+                <ButtonTransparent 
+                    title={"Acúmulo"}
+                    color={acumuloPontos ? 'white' : Colors.pinkText}
+                    titleSize={18}
+                    style={[styles.buttonGroupItem, {
+                        backgroundColor: acumuloPontos ? Colors.pinkText : 'white',
+                        borderTopStartRadius: 8,
+                        borderBottomStartRadius: 8
+                    }]}
+                    onPress={() => setAcumuloPontos(true)} />  
+
+                <ButtonTransparent 
+                    title={"Resgate"}
+                    color={!acumuloPontos ? 'white' : Colors.pinkText}
+                    titleSize={18}
+                    style={[styles.buttonGroupItem, {
+                        backgroundColor: !acumuloPontos ? Colors.pinkText : 'white',
+                        borderTopEndRadius: 8,
+                        borderBottomEndRadius: 8
+                    }]}
+                    onPress={() => setAcumuloPontos(false)}/>   
+            </View>
+
         </Page>
+
+
+
     );
 };
 
 const styles = StyleSheet.create({
+    barcodeContainer: {
+        flex: 1,
+        height: 350,
+    },
+    buttonGroup: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        height: 50,
+        margin: 10
+    },
+    buttonGroupItem: {
+        justifyContent: 'center',
+        width: 120,
+        borderColor: Colors.pinkText,
+        borderWidth: 1,
+        
+    }
 });
 
 export default LerQRCodeScreen;

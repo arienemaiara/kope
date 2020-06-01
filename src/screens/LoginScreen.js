@@ -49,11 +49,12 @@ const LoginScreen = props => {
         const senha = formValues.senha;
         signIn(tipoUsuario, email, senha)
             .catch((error) => {
-                Alert.alert('Erro', error);
+                Alert.alert('Erro', error, 
+                [{
+                    text: 'OK',
+                    onPress: () => setCarregando(false)
+                }]);
             })
-            .finally(() => {
-                setCarregando(false);
-            });
     }
 
     const renderLogin = () => {

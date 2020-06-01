@@ -135,23 +135,30 @@ const CadastroScreen = props => {
     const editarEstabelecimento = (formData) => {
         EstabelecimentoService.atualizar(formData)
             .then((response) => {
-                setCarregando(false);
                 Alert.alert(
                     'Sucesso',
                     'Dados atualizados',
                     [{
                         text: 'OK',
-                        onPress: () => props.navigation.goBack()
+                        onPress: () => {
+                            props.navigation.goBack();
+                            setCarregando(false);
+                        } 
                     }]);
             })
             .catch((error) => {
-                setCarregando(false);
                 const errorData = error.response.data;
                 if (error.response.status === 500) {
-                    Alert.alert('Erro', 'Erro interno do servidor')
+                    Alert.alert('Erro', 'Erro interno do servidor', [{
+                        text: 'OK',
+                        onPress: () => setCarregando(false) 
+                    }])
                 }
                 else if (errorData.messages) {
-                    Alert.alert('Erro', errorData.messages)
+                    Alert.alert('Erro', errorData.messages, [{
+                        text: 'OK',
+                        onPress: () => setCarregando(false) 
+                    }]);
                 }
             })
     }

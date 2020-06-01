@@ -13,11 +13,14 @@ import Colors from '../constants/Colors';
 import Background from './Background';
 import { Title } from './StyledComponents';
 
-const HEADER_MIN_HEIGHT = 100;
-const HEADER_MAX_HEIGHT = 150;
+let HEADER_MIN_HEIGHT = 100;
+let HEADER_MAX_HEIGHT = 150;
 
 const Page = props => {
     const [scrollOffset, setScrollOffset] = useState(new Animated.Value(0));
+
+    if (props.headerHeight) 
+        HEADER_MAX_HEIGHT = props.headerHeight;
 
     const headerHeight = scrollOffset.interpolate({
         inputRange: [0, (HEADER_MAX_HEIGHT - HEADER_MIN_HEIGHT)],
@@ -29,7 +32,10 @@ const Page = props => {
         <View style={styles.container}>
 
             <ScrollView
-                contentContainerStyle={styles.pageContent}
+                contentContainerStyle={{
+                    marginTop: HEADER_MAX_HEIGHT,
+                    paddingBottom: HEADER_MAX_HEIGHT,
+                }}
                 scrollEventThrottle={10}
                 onScroll={Animated.event(
                     [{ nativeEvent: { contentOffset: { y: scrollOffset } } }]

@@ -33,7 +33,7 @@ export const Title = styled(DefaultText)`
 
 export const SubTitle = styled(DefaultText)`
     text-align: center;
-    font-size: 20px;
+    font-size: ${props => props.fontSize ? props.fontSize + 'px' : '20px'};
     color: ${props => props.color ? props.color : Colors.defaultText};
     margin: 15px 0;
 `;
@@ -122,7 +122,7 @@ export const MaskedInput = styled(TextInputMask)`
 //------------------- VIEWS ----------------------
 export const FullContainer = styled.View`
     flex: 1;
-    height: ${Layout.window.height - 90 - 150};
+    height: ${Layout.window.height - 90 - 150 + 'px'};
     justify-content: space-evenly;
     align-items: center;
     background-color: #fff;

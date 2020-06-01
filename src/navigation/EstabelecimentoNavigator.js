@@ -11,7 +11,7 @@ import ConfiguracoesScreen from '../screens/estabelecimento/ConfiguracoesScreen'
 import CadastroScreen from '../screens/estabelecimento/CadastroScreen';
 
 import LerQRCodeScreen from '../screens/estabelecimento/LerQRCodeScreen';
-import DadosClienteScreen from '../screens/estabelecimento/movimentacao/DadosClienteScreen';
+import AcumuloPontosScreen from '../screens/estabelecimento/movimentacao/AcumuloPontosScreen';
 import SelecaoRecompensaScreen from '../screens/estabelecimento/movimentacao/SelecaoRecompensaScreen';
 import ConfirmacaoScreen from '../screens/estabelecimento/movimentacao/ConfirmacaoScreen';
 import Colors from '../constants/Colors';
@@ -39,7 +39,7 @@ function Movimentacoes() {
                 headerShown: false
             }}>
             <Stack.Screen name="QRCode" component={LerQRCodeScreen} />
-            <Stack.Screen name="DadosCliente" component={DadosClienteScreen} />
+            <Stack.Screen name="AcumuloPontos" component={AcumuloPontosScreen} />
             <Stack.Screen name="SelecaoRecompensa" component={SelecaoRecompensaScreen} />
             <Stack.Screen name="Confirmacao" component={ConfirmacaoScreen} />
         </Stack.Navigator>
@@ -71,7 +71,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                     fontFamily: 'circular-std'
                 },
                 style: {
-                    height: 90
+                    height: 60
                 }
             }}
         >

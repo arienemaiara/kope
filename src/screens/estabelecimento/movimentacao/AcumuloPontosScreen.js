@@ -33,11 +33,35 @@ const AcumuloPontosScreen = props => {
             setCarregando(true);
             detalhePorCpf(cpf_cliente)
                 .then((response) => {
-                    setDadosCliente(response.data);
-                    setCarregando(false);
+                    if (!response.data) {
+                        Alert.alert(
+                            'Erro', 
+                            'Usuário não encontrado', 
+                            [{
+                                text: 'OK',
+                                onPress: () => {
+                                    props.navigation.goBack();
+                                }
+                            }]
+                        );
+                    }
+                    else {
+                        setDadosCliente(response.data);
+                        setCarregando(false);
+                    }
+                    
                 })
                 .catch((error) => {
-
+                    Alert.alert(
+                        'Erro', 
+                        'Erro ao buscar dados do usuário. Tente novamente.', 
+                        [{
+                            text: 'OK',
+                            onPress: () => {
+                                props.navigation.goBack();
+                            }
+                        }]
+                    );
                 })
         };
 

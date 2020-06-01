@@ -52,10 +52,8 @@ const LerQRCodeScreen = props => {
     const confirmarCPFCliente = (cpf) => {
         if (!cpf) {
             Alert.alert('Erro', 'Informe o CPF do cliente para prosseguir.');
-            //setScanned(false);
         }
         else {
-            //setScanned(true);
             if (acumuloPontos) {
                 acumularPontosCliente();
             }
@@ -70,7 +68,7 @@ const LerQRCodeScreen = props => {
     }
 
     const resgatarPontosCliente = () => {
-
+        props.navigation.navigate('SelecaoRecompensa', { cpf_cliente: cpfCliente });
     }
 
     return (

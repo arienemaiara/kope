@@ -5,6 +5,7 @@ import {
     FlatList,
     StyleSheet
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import {
     InfoText,
@@ -21,6 +22,7 @@ import api from '../../services/api';
 
 const ExtratoPontosScreen = props => {
 
+    const [carregando, setCarregando] = useState(false);
     const [page, setPage] = useState(1);
     const [extratoLista, setExtratoLista] = useState([]);
     const [saldoAtual, setSaldoAtual] = useState(0);
@@ -28,24 +30,26 @@ const ExtratoPontosScreen = props => {
     const { estabelecimento_id, estabelecimento_nome } = props.route?.params;
 
     useEffect(() => {
+        const carregarExtrato = () => {
+            setCarregando(true);
+            api.get('/movimentacoes', {
+                params: {
+                    page,
+                    estabelecimento_id
+                }
+            })
+                .then((response) => {
+                    setCarregando(false);
+                    setExtratoLista(response.data.movimentacoes);
+                    setSaldoAtual(response.data.total_pontos)
+                })
+                .catch((error) => {
+                    setCarregando(false);
+                });
+        };
+
         carregarExtrato();
     }, []);
-
-    const carregarExtrato = () => {
-        api.get('/movimentacoes', {
-            params: {
-                page,
-                estabelecimento_id
-            }
-        })
-            .then((response) => {
-                setExtratoLista(response.data.movimentacoes);
-                setSaldoAtual(response.data.total_pontos)
-            })
-            .catch((error) => {
-
-            });
-    };
 
     const renderItem = (item) => {
         return (
@@ -76,6 +80,7 @@ const ExtratoPontosScreen = props => {
                     iconName='arrow-left'
                     onPress={() => props.navigation.goBack()} />
             }>
+            <Spinner visible={carregando} />
             <View>
                 <View style={styles.saldoInfo}>
                     <DefaultText fontSize={20} color={Colors.grayText}>Saldo Atual</DefaultText>

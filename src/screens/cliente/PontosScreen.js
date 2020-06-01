@@ -5,6 +5,7 @@ import {
     Alert,
     StyleSheet
 } from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import {
     InfoText,
@@ -22,18 +23,27 @@ import api from '../../services/api';
 const PontosScreen = ({ navigation }) => {
 
     const [pontosLista, setPontosLista] = useState([]);
+    const [carregando, setCarregando] = useState(false);
 
     useEffect(() => {
         carregarListaPontos();
     }, []);
 
     const carregarListaPontos = () => {
+        setCarregando(true);
         api.get('/pontosPorEstabelecimento')
             .then((response) => {
+                setCarregando(false);
                 setPontosLista(response.data);
             })
             .catch((error) => {
-                Alert.alert('Erro', 'Erro ao buscar pontuação')
+                Alert.alert(
+                    'Erro', 
+                    'Erro ao buscar pontuação',
+                    [{
+                        text: 'OK',
+                        onPress: () => setCarregando(false)
+                    }])
             });
     }
 
@@ -54,6 +64,7 @@ const PontosScreen = ({ navigation }) => {
     return (
         <Page
             title='Meus Pontos'>
+            <Spinner visible={carregando} />
             {
                 pontosLista.length === 0 ?
                 <SemRegistros message="Você ainda não pontuou em nenhum estabelecimento." />

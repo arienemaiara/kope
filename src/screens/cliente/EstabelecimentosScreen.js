@@ -10,6 +10,7 @@ import {
     ScrollView
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import Page from '../../components/Page';
 import SemRegistros from '../../components/SemRegistros';
@@ -20,7 +21,7 @@ import api from '../../services/api';
 
 const EstabelecimentosScreen = ({ navigation }) => {
 
-    //const [location, setLocation] = useState();
+    const [carregando, setCarregando] = useState(false);
     const [enderecosLista, setEnderecosLista] = useState([]);
 
     let location;
@@ -39,16 +40,19 @@ const EstabelecimentosScreen = ({ navigation }) => {
     }, []);
 
     const carregarEnderecos = () => {
-        console.tron.log(location);
+        setCarregando(true);
         api.get('/estabelecimentos', {
             params: {
                 latitude: location?.coords?.latitude,
                 longitude: location?.coords?.longitude,
             }
         })
-            .then((response) => {
-                setEnderecosLista(response.data)
-            })
+        .then((response) => {
+            setEnderecosLista(response.data)
+        })
+        .finally(() => {
+            setCarregando(false);
+        })
     }
 
     const renderLista = () => {
@@ -85,6 +89,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
     return (
         <Page 
             title='Estabelecimentos Participantes'>
+            <Spinner visible={carregando} />
             <View style={styles.buscar}>
                 <Feather
                     name="search"

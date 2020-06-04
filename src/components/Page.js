@@ -7,10 +7,11 @@ import {
     Animated,
     ScrollView,
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { LinearGradient } from 'expo-linear-gradient';
 
+
 import Colors from '../constants/Colors';
-import Background from './Background';
 import { Title } from './StyledComponents';
 
 let HEADER_MIN_HEIGHT = 100;
@@ -89,5 +90,12 @@ const styles = StyleSheet.create({
 
     }
 });
+
+Page.propTypes = {
+    title: PropTypes.string.isRequired,
+    headerHeight: PropTypes.number,
+    headerBackButton: PropTypes.element,
+    headerRightButton: PropTypes.element,
+};
 
 export default Page;

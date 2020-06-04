@@ -42,13 +42,6 @@ const LerQRCodeScreen = props => {
         confirmarCPFCliente(data);
     };
 
-    if (hasPermission === null) {
-        return <Text>Requesting for camera permission</Text>;
-    }
-    if (hasPermission === false) {
-        return <Text>No access to camera</Text>;
-    }
-
     const confirmarCPFCliente = (cpf) => {
         if (!cpf) {
             Alert.alert('Erro', 'Informe o CPF do cliente para prosseguir.');
@@ -64,11 +57,11 @@ const LerQRCodeScreen = props => {
     }
 
     const acumularPontosCliente = () => {
-        props.navigation.navigate('AcumuloPontos', { cpf_cliente: cpfCliente });
+        props.navigation.navigate('AcumuloPontos', { cpf_cliente: cpfInputRef.getRawValue() });
     }
 
     const resgatarPontosCliente = () => {
-        props.navigation.navigate('SelecaoRecompensa', { cpf_cliente: cpfCliente });
+        props.navigation.navigate('SelecaoRecompensa', { cpf_cliente: cpfInputRef.getRawValue() });
     }
 
     return (

@@ -26,8 +26,6 @@ const EstabelecimentoDetalheScreen = (props) => {
         longitude,
     };
 
-    console.tron.log(coordenadasMapa)
-
     return (
         <Page
             title={estabelecimento.nome}

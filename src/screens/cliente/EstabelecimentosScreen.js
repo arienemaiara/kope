@@ -65,7 +65,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
             return (
                 <FlatList
                     data={enderecosLista}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => renderItem(item)} />
             )
         }

@@ -53,7 +53,7 @@ const RecompensasEstabelecimentoScreen = (props) => {
                 <SubTitle color={Colors.greenText}>Produtos disponíveis para regaste</SubTitle>
                 <FlatList
                     data={recompensasLista}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <RecompensaItem item={item} onPress={() => {}} />}
                 />
             </View>

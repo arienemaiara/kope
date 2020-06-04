@@ -41,7 +41,7 @@ const RecompensasListaScreen = props => {
     const renderListaRecompensas = () => {
         if (!recompensas || recompensas.length === 0) {
             return (
-                <SemRegistros message='Nenhuma recompensa cadastrada ainda' />
+                <SemRegistros message='Nenhuma recompensa cadastrada ainda.' />
             )
         }
         else {
@@ -50,7 +50,7 @@ const RecompensasListaScreen = props => {
                     data={recompensas}
                     refreshing={false}
                     onRefresh={() => console.tron.log('refreshin')}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <RecompensaItem item={item} onPress={() => onItemPressHandler(item)} />}
                 />
             )

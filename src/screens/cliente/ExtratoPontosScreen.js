@@ -88,7 +88,7 @@ const ExtratoPontosScreen = props => {
                 </View>
                 <FlatList
                     data={extratoLista}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => renderItem(item)} />
             </View>
         </Page>

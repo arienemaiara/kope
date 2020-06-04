@@ -68,6 +68,7 @@ const CadastroScreen = props => {
             setCarregando(true);
             EstabelecimentoService.detalhe()
                 .then((response) => {
+                    verificarMascaraCpfCnpj(response.data.cpf_cnpj);
                     setInitialValues(response.data);
                 })
                 .catch((error) => {
@@ -79,8 +80,8 @@ const CadastroScreen = props => {
         }
     }, []);
 
-    const verificarMascaraCpfCnpj = (values) => {
-        const len = cpfInputRef.getRawValue().length;
+    const verificarMascaraCpfCnpj = (cpf_cnpj) => {
+        const len = cpf_cnpj ? cpf_cnpj.length : cpfInputRef.getRawValue().length;
         if (len < 11) {
             setMascaraCpfCnpj('cpf');
         }
@@ -203,7 +204,7 @@ const CadastroScreen = props => {
                                             keyboardType="numeric"
                                             returnKeyType="next"
                                             value={values.cpf_cnpj}
-                                            onChange={verificarMascaraCpfCnpj}
+                                            onChange={() => verificarMascaraCpfCnpj()}
                                             onChangeText={handleChange('cpf_cnpj')}
                                             onBlur={handleBlur('cpf_cnpj')}
                                             editable={!editMode}

@@ -122,7 +122,7 @@ export const MaskedInput = styled(TextInputMask)`
 //------------------- VIEWS ----------------------
 export const FullContainer = styled.View`
     flex: 1;
-    height: ${Layout.window.height - 90 - 150 + 'px'};
+    height: ${Layout.window.height - 90 - 130 + 'px'};
     justify-content: space-evenly;
     align-items: center;
     background-color: #fff;

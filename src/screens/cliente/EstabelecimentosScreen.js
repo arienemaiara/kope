@@ -12,7 +12,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-import ListPage from '../../components/ListPage';
+import Page from '../../components/Page';
 import SemRegistros from '../../components/SemRegistros';
 import AvatarImagem from '../../components/AvatarImagem';
 import { InfoText, ListText, DefaultInput, ItemLista, Row, Column } from '../../components/StyledComponents';
@@ -115,7 +115,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
     }
 
     return (
-        <ListPage 
+        <Page 
             title='Estabelecimentos Participantes'>
             <Spinner visible={carregando} />
             <View style={styles.buscar}>
@@ -128,7 +128,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
                     style={styles.buscarText} />
             </View>
             { renderLista() }
-        </ListPage>
+        </Page>
     );
 };
 

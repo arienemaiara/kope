@@ -1,12 +1,11 @@
 import React, { useContext } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import QRCode from 'react-native-qrcode-generator';
 
 import Page from '../../components/Page';
-import Layout from '../../constants/Layout';
 import AuthContext from '../../contexts/auth';
 
-import { DefaultText } from '../../components/StyledComponents';
+import { FullContainer, DefaultText } from '../../components/StyledComponents';
 
 const QRCodeScreen = props => {
 
@@ -32,14 +31,13 @@ const QRCodeScreen = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        height: Layout.window.height - 90 - 150,
-        justifyContent: 'space-evenly',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
         padding: 15
     },
     text: {
-        textAlign: 'center'
+        textAlign: 'center',
+        marginBottom: 25
     }
 });
 

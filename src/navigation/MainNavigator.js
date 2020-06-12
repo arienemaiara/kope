@@ -22,11 +22,19 @@ const MainNavigator = props => {
     // }
 
     const renderNavigation = () => {
-        return userType === 'estabelecimento'
-            ? <RecompensaProvider>
-                <EstabelecimentoNavigator />
-            </RecompensaProvider>
-            : <ClienteNavigator />
+        if (userType === 'estabelecimento') {
+            return (
+                <RecompensaProvider>
+                    <EstabelecimentoNavigator />
+                </RecompensaProvider>
+            );
+        }
+        else if (userType === 'cliente') {
+            return (
+                <ClienteNavigator />
+            );
+        }
+        return null;
     }
     return (
         <NavigationContainer>

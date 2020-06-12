@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }) => {
             const storageUser = await AsyncStorage.getItem('user');
             const storageUserType = await AsyncStorage.getItem('userType');
             const storageToken = await AsyncStorage.getItem('token');
-
             if (storageUser && storageToken && storageUserType) {
                 api.defaults.headers['Authorization'] = `Bearer ${storageToken}`;
 

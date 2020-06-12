@@ -16,6 +16,8 @@ import SelecaoRecompensaScreen from '../screens/estabelecimento/movimentacao/Sel
 import ConfirmacaoScreen from '../screens/estabelecimento/movimentacao/ConfirmacaoScreen';
 import Colors from '../constants/Colors';
 
+import { isIphoneX } from '../utils/helpers';
+
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const INITIAL_ROUTE_NAME = 'Recompensas';
@@ -71,7 +73,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                     fontFamily: 'circular-std'
                 },
                 style: {
-                    height: 60
+                    height: isIphoneX() ? 90 : 60
                 }
             }}
         >

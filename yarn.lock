@@ -2873,10 +2873,10 @@ expo-asset@~8.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
-expo-barcode-scanner@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/expo-barcode-scanner/-/expo-barcode-scanner-8.1.0.tgz#2f1504465725673a18453d976062b3aab55dd867"
-  integrity sha512-S9fpP4NKRml/xVpioHpixn0RSsGs3mgdhwjGjMitl3Cx/euxJtVy1UZK1zX5/62vFtO6gl/PQgeLGpv8Bm8w+w==
+expo-barcode-scanner@~8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/expo-barcode-scanner/-/expo-barcode-scanner-8.0.0.tgz#f574191621907aa286cf47f6757031cc112720a5"
+  integrity sha512-8RCloJFXsx1ToXBRNHAjJ14fhHTKzumqY9Vz9Tmk/PRwMEFSpNNsVrlZ2Vp229wJQxOuVsGA5oHkbeeHdt7m9Q==
   dependencies:
     lodash "^4.6.0"
     prop-types "^15.6.0"
@@ -2907,6 +2907,13 @@ expo-font@~8.0.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-picker@~8.0.1:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-8.0.2.tgz#14139f1d73793ae7fba6fe3cf34e1dc91baf402a"
+  integrity sha512-oa0/JoKIv5mxyadpVqiQ+BXak2s7QS3+Rurj1j/gL5GGFmb3cDJWbGHxvtrEXEccv8812JAp5BfBRqfzlW1gMQ==
+  dependencies:
+    expo-permissions "*"
+
 expo-keep-awake@~8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-8.0.0.tgz#f9200a876a5db86e3f0aec8843428a918cdc08d6"
@@ -2923,6 +2930,11 @@ expo-location@~8.0.0:
   integrity sha512-48i4dUCaqPTwSri79yummKwg6vE6loI7d4iHCrbG4EEuN3fhS8I9xU60CEkoNZTziH9zK0iw4KSjr7DbXUAaCw==
   dependencies:
     invariant "^2.2.4"
+
+expo-permissions@*:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.1.0.tgz#a7f2ee91ba76ce3a467e7b10adaa9ca5201b226f"
+  integrity sha512-QBHD+1J9+sGFnhoEGzMRchPweeEE0OJ9ehG/0l1BMRBA7qsLS9vRC1FTJ55NwjI0Kr4RTha9r6ZX1kZHT09f/w==
 
 expo-permissions@~8.0.0:
   version "8.0.0"
@@ -3378,9 +3390,9 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
-"hammerjs@git+https://github.com/naver/hammer.js.git":
+"hammerjs@https://github.com/naver/hammer.js.git":
   version "2.0.17-snapshot"
-  resolved "git+https://github.com/naver/hammer.js.git#54bc698b25edd6e1b76ca975ebaced5ce0467d51"
+  resolved "https://github.com/naver/hammer.js.git#54bc698b25edd6e1b76ca975ebaced5ce0467d51"
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
@@ -5737,10 +5749,10 @@ react-native-web@~0.11.7:
     prop-types "^15.6.0"
     react-timer-mixin "^0.13.4"
 
-react-native-webview@^9.0.1:
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-9.4.0.tgz#108da34a6c7e1c032dcabc942b7e4947ca1d8028"
-  integrity sha512-BBOFUuza0p04+7fNi7TJmB0arpDJzGxHYwTCgI4vj5n/fl7u4jbm7ETp88mf7lo9lP6C6HGLo38KnEy1aXCQkg==
+react-native-webview@7.4.3:
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-7.4.3.tgz#e00e92e17f7389d84d09f5900652501ff2665915"
+  integrity sha512-4n72B2D7n1xOQSoCSD1qk9D7JksyT4d6nk8QG9guZKZn3KXQL5EejwE2yhh1TxZRQpr+OD3a96rb+rA/UEnvrQ==
   dependencies:
     escape-string-regexp "2.0.0"
     invariant "2.2.4"

@@ -14,6 +14,8 @@ import PontosScreen from '../screens/cliente/PontosScreen';
 import ExtratoPontosScreen from '../screens/cliente/ExtratoPontosScreen';
 import Colors from '../constants/Colors';
 
+import { isIphoneX } from '../utils/helpers';
+
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const INITIAL_ROUTE_NAME = 'Estabelecimentos';
@@ -67,7 +69,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                     fontFamily: 'circular-std'
                 },
                 style: {
-                    height: 90
+                    height: isIphoneX() ? 90 : 60
                 }
             }}
         >

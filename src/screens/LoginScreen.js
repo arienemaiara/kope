@@ -3,7 +3,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import {
     View,
-    Text,
     TouchableWithoutFeedback,
     Alert,
     Keyboard,
@@ -20,11 +19,11 @@ import {
     Label,
     DefaultButton,
     FormInput,
-    MaskedInput
 } from '../components/StyledComponents';
-import Colors from '../constants/Colors';
 import Background from '../components/Background';
 import ErrorMessage from '../components/ErrorMessage';
+import Colors from '../constants/Colors';
+import { isIphoneX } from '../utils/helpers';
 
 const LoginScreen = props => {
 
@@ -202,6 +201,7 @@ const styles = StyleSheet.create({
         width: '100%',
         bottom: 0,
         padding: 12,
+        paddingBottom: isIphoneX() ? 22 : 12
     },
 });
 

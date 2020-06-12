@@ -74,8 +74,8 @@ const CadastroScreen = props => {
     const handleSave = (values) => {
         setCarregando(true);
         const formData = values;
-        formData.cpf = cpfInputRef.getRawValue();
-        formData.telefone = telefoneInputRef.getRawValue();
+        formData.cpf = values.cpf.replace(/[().-]/g, '');
+        formData.telefone = values.telefone.replace(/[().-]/g, '');
         delete formData.confirmPassword;
 
         if (editMode === true) {

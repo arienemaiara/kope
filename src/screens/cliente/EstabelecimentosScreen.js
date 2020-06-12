@@ -14,8 +14,12 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 import Page from '../../components/Page';
 import SemRegistros from '../../components/SemRegistros';
+import AvatarImagem from '../../components/AvatarImagem';
+import { InfoText, ListText, DefaultInput, ItemLista, Row, Column } from '../../components/StyledComponents';
+
 import Colors from '../../constants/Colors';
-import { InfoText, ListText, DefaultInput, ItemLista } from '../../components/StyledComponents';
+
+
 import { converterDistanciaKM } from '../../utils/helpers';
 import api from '../../services/api';
 
@@ -76,12 +80,20 @@ const EstabelecimentosScreen = ({ navigation }) => {
         const { estabelecimento } = item;
         return (
             <ItemLista
-                onPress={() => { navigation.navigate('RecompensasEstabelecimento', { estabelecimento, endereco: item }) }}>
-                <ListText>{estabelecimento.nome}</ListText>
-                {
-                    item.distancia &&
-                    <InfoText>{converterDistanciaKM(item.distancia)}km</InfoText>
-                }
+                onPress={() => { 
+                    navigation.navigate('RecompensasEstabelecimento', { estabelecimento, endereco: item }) 
+                }}>
+                <Row>
+                    <AvatarImagem imagem_url={estabelecimento.avatar_url} />
+                    <Column>
+                        <ListText>{estabelecimento.nome}</ListText>
+                        {
+                            item.distancia &&
+                            <InfoText>{converterDistanciaKM(item.distancia)}km</InfoText>
+                        }
+                    </Column>
+                </Row>
+                
             </ItemLista>
         )
     }

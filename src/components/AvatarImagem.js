@@ -11,7 +11,7 @@ const AvatarImagem = ({ imagem_url }) => {
             return <Feather name="image" size={26} color="#fff" />
         }
         else {
-            return <Image source={{ uri: imagem_url }} style={{width: 56, height: 56}} />
+            return <Image source={{ uri: imagem_url }} style={styles.image} />
         }
     }
 
@@ -32,6 +32,11 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.grayBackground,
         borderRadius: 28,
         marginRight: 10,
+    },
+    image: {
+        width: 56, 
+        height: 56,
+        borderRadius: 28,
     }
 });
 

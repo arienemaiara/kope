@@ -8,6 +8,7 @@ import { ItemLista, DefaultText, InfoText, SubTitle } from '../../components/Sty
 import Colors from '../../constants/Colors';
 import * as recompensasService from '../../services/recompensas';
 import { converterDistanciaKM } from '../../utils/helpers';
+import SemRegistros from '../../components/SemRegistros'; 
 
 const RecompensasEstabelecimentoScreen = (props) => {
 
@@ -27,6 +28,23 @@ const RecompensasEstabelecimentoScreen = (props) => {
     useEffect(() => {
         buscarRecompensas();
     }, []);
+
+    const renderLista = () => {
+        if (!recompensasLista || recompensasLista.length === 0) {
+            return (
+                <SemRegistros message='O estabelecimento ainda não cadastrou nenhuma recompensa.' />
+            )
+        }
+        else {
+            return (
+                <FlatList
+                    data={recompensasLista}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => <RecompensaItem item={item} onPress={() => {}} />}
+                />
+            )
+        }
+    }
 
     return (
         <Page
@@ -51,11 +69,7 @@ const RecompensasEstabelecimentoScreen = (props) => {
             </View>
             <View style={{justifyContent: 'center'}}>
                 <SubTitle color={Colors.greenText}>Produtos disponíveis para regaste</SubTitle>
-                <FlatList
-                    data={recompensasLista}
-                    keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => <RecompensaItem item={item} onPress={() => {}} />}
-                />
+                { renderLista() }
             </View>
         </Page>
     );

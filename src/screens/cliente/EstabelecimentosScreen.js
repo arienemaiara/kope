@@ -27,6 +27,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
 
     const [carregando, setCarregando] = useState(false);
     const [enderecosLista, setEnderecosLista] = useState([]);
+    const [page, setPage] = useState(0);
 
     let location;
 
@@ -38,21 +39,26 @@ const EstabelecimentosScreen = ({ navigation }) => {
     useEffect(() => {
         (async () => {
             await getLocation();
-            console.tron.log(location);
             carregarEnderecos();
         })();
     }, []);
 
     const carregarEnderecos = () => {
+
+        if (carregando) return;
+
         setCarregando(true);
+
         api.get('/estabelecimentos', {
             params: {
                 latitude: location?.coords?.latitude,
                 longitude: location?.coords?.longitude,
+                page: page + 1
             }
         })
         .then((response) => {
-            setEnderecosLista(response.data)
+            setEnderecosLista([ ...enderecosLista, ...response.data]);
+            setPage(page+1);
         })
         .finally(() => {
             setCarregando(false);
@@ -62,7 +68,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
     const renderLista = () => {
         if (!enderecosLista || enderecosLista.length === 0) {
             return (
-                <SemRegistros message='Nenhum estabelecimento encontrado' />
+                <SemRegistros message='Nenhum estabelecimento encontrado.' />
             )
         }
         else {
@@ -70,7 +76,10 @@ const EstabelecimentosScreen = ({ navigation }) => {
                 <FlatList
                     data={enderecosLista}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => renderItem(item)} />
+                    renderItem={({ item }) => renderItem(item)} 
+                    onEndReached={carregarEnderecos}
+                    onEndReachedThreshold={0.2}
+                />
             )
         }
         

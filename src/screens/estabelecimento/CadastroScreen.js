@@ -1,8 +1,10 @@
 import React, { Fragment, useRef, createRef, useContext, useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import { Formik, FieldArray } from 'formik';
+import { Formik } from 'formik';
 import { View, Alert, StyleSheet } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
 
 import Page from '../../components/Page';
 import HeaderButton from '../../components/header/HeaderButton';
@@ -10,17 +12,22 @@ import ErrorMessage from '../../components/ErrorMessage';
 import {
     Container,
     Label,
+    ButtonTransparent,
     MaskedInput,
     FormInput
 } from '../../components/StyledComponents';
 import Colors from '../../constants/Colors';
 import EnderecoList from '../../components/estabelecimento/EnderecoList';
 import * as EstabelecimentoService from '../../services/estabelecimento';
+import ImagemPreview from '../../components/ImagemPreview';
+
 import AuthContext from '../../contexts/auth';
 
 import { validationShapeCadastro } from '../../utils/validationShape';
 
 const CadastroScreen = props => {
+
+    const [image, setImage] = useState(null);
 
     const [carregando, setCarregando] = useState(false);
     const [initialValues, setInitialValues] = useState({
@@ -70,6 +77,9 @@ const CadastroScreen = props => {
                 .then((response) => {
                     verificarMascaraCpfCnpj(response.data.cpf_cnpj);
                     setInitialValues(response.data);
+                    if (response.data.avatar_url && !response.data.avatar_url.includes('null')) {
+                        setImage(response.data.avatar_url);
+                    }
                 })
                 .catch((error) => {
                     Alert.alert('Erro', 'Erro ao buscar os dados cadastrados');
@@ -79,6 +89,30 @@ const CadastroScreen = props => {
                 })
         }
     }, []);
+
+    useEffect(() => {
+        (async () => {
+          if (Constants.platform.ios) {
+            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if (status !== 'granted') {
+                alert('É necessário permitir o acesso ao rolo da câmera.');
+            }
+          }
+        })();
+    }, []);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+        
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
+    };
 
     const verificarMascaraCpfCnpj = (cpf_cnpj) => {
         const len = cpf_cnpj ? cpf_cnpj.length : cpfInputRef.getRawValue().length;
@@ -100,12 +134,29 @@ const CadastroScreen = props => {
     const handleSave = (values) => {
         if (enderecoListRef.current.isValid) {
             setCarregando(true);
-            let formData = values;
-            formData.cpf_cnpj = cpfInputRef.getRawValue();
-            formData.telefone = telefoneInputRef.getRawValue();
+
             let { enderecos } = enderecoListRef.current.values;
-            formData.enderecos = enderecos;
-            console.tron.log(formData);
+
+            const formData = new FormData();
+
+            const formItems = Object.keys(values);
+            
+            formItems.map(item => {
+                let value = values[item];
+                if (item === 'enderecos') {
+                    value = JSON.stringify(enderecos);
+                }
+                formData.append(item, value);
+            });
+
+            if (image) {
+                formData.append('file', {
+                    uri: image,
+                    name: 'estabelecimento.jpg',
+                    type:'image/jpg'
+                });
+            }
+            
             if (editMode === false) {
                 cadastrarEstabelecimento(formData);
             }
@@ -180,6 +231,14 @@ const CadastroScreen = props => {
                 <Spinner visible={carregando} />
 
                 <View style={styles.container}>
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+                        <ImagemPreview imagem_url={image ? image : 'null'} />
+                        <ButtonTransparent 
+                            title={image ? 'Alterar imagem' : 'Selecione uma imagem'}
+                            onPress={pickImage}
+                            color={Colors.pinkText} />
+                    </View>
+
                     <Formik
                         initialValues={initialValues}
                         enableReinitialize={true}

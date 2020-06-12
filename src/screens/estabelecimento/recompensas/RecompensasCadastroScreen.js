@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useEffect, useState, useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { View, Image, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 
@@ -60,9 +60,7 @@ const RecompensasCadastroScreen = props => {
             aspect: [4, 3],
             quality: 1,
         });
-    
-        console.tron.log(result);
-    
+        
         if (!result.cancelled) {
             setImage(result.uri);
         }

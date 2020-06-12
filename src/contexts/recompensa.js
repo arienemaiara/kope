@@ -2,8 +2,6 @@ import React, { createContext, useState, useEffect, useContext } from 'react';
 
 import AuthContext from './auth';
 import api from '../services/api';
-const apiRecompensa = api;
-apiRecompensa.defaults.headers['Content-Type'] = 'multipart/form-data';
 
 const RecompensaContext = createContext({
     loading: false,
@@ -36,7 +34,7 @@ export const RecompensaProvider = ({ children }) => {
         setLoading(true);
     
         return new Promise((resolve, reject) => {
-            apiRecompensa.post('/recompensas', formData)
+            api.post('/recompensas', formData)
                 .then((response) => {
                     setRecompensasLista([...recompensasLista, response.data]);
                     setLoading(false);
@@ -51,10 +49,8 @@ export const RecompensaProvider = ({ children }) => {
 
     const alterarRecompensa = (id, formData) => {
         setLoading(true);
-        console.tron.log(formData)
         return new Promise((resolve, reject) => {
-            //api.put('/recompensas/' + id, recompensa)
-            apiRecompensa.put('/recompensas/' + id, formData)
+            ApplicationCache.put('/recompensas/' + id, formData)
                 .then((response) => {
                     carregarRecompensas();
                     setLoading(false);

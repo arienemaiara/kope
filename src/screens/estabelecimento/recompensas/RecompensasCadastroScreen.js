@@ -1,17 +1,22 @@
-import React, { Fragment, useRef, useContext } from 'react';
+import React, { Fragment, useRef, useEffect, useState, useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, Image, StyleSheet, Alert } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
 
 import Page from '../../../components/Page';
 import HeaderButton from '../../../components/header/HeaderButton';
 import ErrorMessage from '../../../components/ErrorMessage';
 import Colors from '../../../constants/Colors';
 import { Container, Label, FormInput, ButtonTransparent } from '../../../components/StyledComponents';
+import ImagemPreview from '../../../components/ImagemPreview';
 
 import RecompensaContext from '../../../contexts/recompensa';
 
+
 const RecompensasCadastroScreen = props => {
+    const [image, setImage] = useState(null);
 
     const { adicionarRecompensa, alterarRecompensa, excluirRecompensa } = useContext(RecompensaContext);
 
@@ -33,13 +38,55 @@ const RecompensasCadastroScreen = props => {
         qtd_pontos: item?.qtd_pontos.toString() || ''
     };
 
+    useEffect(() => {
+        (async () => {
+          if (Constants.platform.ios) {
+            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+            if (status !== 'granted') {
+                alert('É necessário permitir o acesso ao rolo da câmera.');
+            }
+          }
+        })();
+
+        if (item?.imagem_url && !item?.imagem_url.includes('null')) {
+            setImage(item.imagem_url);
+        }
+    }, []);
+
+    const pickImage = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+    
+        console.tron.log(result);
+    
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
+    };
+
     const onBackHandler = () => {
         props.navigation.goBack();
     };
 
     const handleSave = (values) => {
+
+        const formData = new FormData();
+        formData.append('descricao', values.descricao);
+        formData.append('qtd_pontos', values.qtd_pontos);
+        if (image && image !== item?.imagem_url) {
+            formData.append('file', {
+                uri: image,
+                name: 'recompensa.jpg',
+                type:'image/jpg'
+            });
+        }
+
         if (editMode === false) {
-            adicionarRecompensa(values)
+            adicionarRecompensa(formData)
                 .then(() => {
                     props.navigation.goBack();
                 })
@@ -49,7 +96,7 @@ const RecompensasCadastroScreen = props => {
                 });
         }
         else {
-            alterarRecompensa(item.id, values)
+            alterarRecompensa(item.id, formData)
                 .then(() => {
                     props.navigation.goBack();
                 })
@@ -91,6 +138,14 @@ const RecompensasCadastroScreen = props => {
                     <HeaderButton iconName='save' onPress={() => formRef.current.handleSubmit()} />
                 }>
                 <View style={styles.container}>
+                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                        <ImagemPreview imagem_url={image ? image : 'null'} />
+                        <ButtonTransparent 
+                            title={image ? 'Alterar imagem' : 'Selecione uma imagem'}
+                            onPress={pickImage}
+                            color={Colors.pinkText} />
+                    </View>
+
                     <Formik
                         initialValues={initialValues}
                         onSubmit={values => handleSave(values)}

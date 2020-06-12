@@ -49,7 +49,6 @@ const CadastroScreen = props => {
     });
     const [mascaraCpfCnpj, setMascaraCpfCnpj] = useState('cpf');
 
-    const { signIn } = useContext(AuthContext);
     const estabelecimento = props.route?.params?.estabelecimento;
     const editMode = estabelecimento ? true : false;
     const formRef = useRef();
@@ -116,7 +115,7 @@ const CadastroScreen = props => {
 
     const verificarMascaraCpfCnpj = (cpf_cnpj) => {
         const len = cpf_cnpj ? cpf_cnpj.length : cpfInputRef.getRawValue().length;
-        if (len < 11) {
+        if (len <= 11) {
             setMascaraCpfCnpj('cpf');
         }
         else {
@@ -145,7 +144,10 @@ const CadastroScreen = props => {
                 let value = values[item];
                 if (item === 'enderecos') {
                     value = JSON.stringify(enderecos);
-                }
+                } 
+                else if (item === 'cpf_cnpj' || item === 'telefone') {
+                    value = value.replace(/[().-]/g, '');
+                } 
                 formData.append(item, value);
             });
 
@@ -169,8 +171,16 @@ const CadastroScreen = props => {
     const cadastrarEstabelecimento = (formData) => {
         EstabelecimentoService.cadastrar(formData)
             .then((response) => {
-                setCarregando(false);
-                signIn('estabelecimento', formData.email, formData.password)
+                Alert.alert(
+                    'Sucesso', 
+                    'Dados cadastrados com sucesso, faça sua autenticação.', 
+                    [{
+                        text: 'OK',
+                        onPress: () => {
+                            props.navigation.goBack();
+                            setCarregando(false);
+                        } 
+                    }])
             })
             .catch((error) => {
                 setCarregando(false);

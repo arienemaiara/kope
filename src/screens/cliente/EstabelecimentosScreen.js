@@ -12,7 +12,7 @@ import {
 import { Feather } from '@expo/vector-icons';
 import Spinner from 'react-native-loading-spinner-overlay';
 
-import Page from '../../components/Page';
+import ListPage from '../../components/ListPage';
 import SemRegistros from '../../components/SemRegistros';
 import AvatarImagem from '../../components/AvatarImagem';
 import { InfoText, ListText, DefaultInput, ItemLista, Row, Column } from '../../components/StyledComponents';
@@ -28,12 +28,14 @@ const EstabelecimentosScreen = ({ navigation }) => {
     const [carregando, setCarregando] = useState(false);
     const [enderecosLista, setEnderecosLista] = useState([]);
     const [page, setPage] = useState(0);
+    const [userLocation, setUserLocation] = useState();
 
     let location;
 
     const getLocation = async () => {
         let { status } = await Location.requestPermissionsAsync();
         location = await Location.getCurrentPositionAsync({});
+        setUserLocation(location);
     };
 
     useEffect(() => {
@@ -47,18 +49,23 @@ const EstabelecimentosScreen = ({ navigation }) => {
 
         if (carregando) return;
 
+        const latitude = userLocation?.coords?.latitude || location?.coords?.latitude;
+        const longitude = userLocation?.coords?.longitude || location?.coords?.longitude;
+
         setCarregando(true);
 
         api.get('/estabelecimentos', {
             params: {
-                latitude: location?.coords?.latitude,
-                longitude: location?.coords?.longitude,
+                latitude,
+                longitude,
                 page: page + 1
             }
         })
         .then((response) => {
-            setEnderecosLista([ ...enderecosLista, ...response.data]);
-            setPage(page+1);
+            if (response.data.length > 0) {
+                setEnderecosLista([ ...enderecosLista, ...response.data]);
+                setPage(page+1);
+            }
         })
         .finally(() => {
             setCarregando(false);
@@ -108,7 +115,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
     }
 
     return (
-        <Page 
+        <ListPage 
             title='Estabelecimentos Participantes'>
             <Spinner visible={carregando} />
             <View style={styles.buscar}>
@@ -121,7 +128,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
                     style={styles.buscarText} />
             </View>
             { renderLista() }
-        </Page>
+        </ListPage>
     );
 };
 

@@ -48,20 +48,20 @@ const LerQRCodeScreen = props => {
         }
         else {
             if (acumuloPontos) {
-                acumularPontosCliente();
+                acumularPontosCliente(cpf);
             }
             else {
-                resgatarPontosCliente();
+                resgatarPontosCliente(cpf);
             }
         }
     }
 
-    const acumularPontosCliente = () => {
-        props.navigation.navigate('AcumuloPontos', { cpf_cliente: cpfInputRef.getRawValue() });
+    const acumularPontosCliente = (cpf) => {
+        props.navigation.navigate('AcumuloPontos', { cpf_cliente: cpf });
     }
 
-    const resgatarPontosCliente = () => {
-        props.navigation.navigate('SelecaoRecompensa', { cpf_cliente: cpfInputRef.getRawValue() });
+    const resgatarPontosCliente = (cpf) => {
+        props.navigation.navigate('SelecaoRecompensa', { cpf_cliente: cpf });
     }
 
     return (

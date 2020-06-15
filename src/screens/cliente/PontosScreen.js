@@ -75,8 +75,11 @@ const PontosScreen = ({ navigation }) => {
                     </InfoText>
                     <FlatList
                         data={pontosLista}
+                        refreshing={false}
+                        onRefresh={() => carregarListaPontos()}
                         keyExtractor={(item) => item.estabelecimento.id.toString()}
-                        renderItem={({ item }) => renderItem(item)} />
+                        renderItem={({ item }) => renderItem(item)}
+                        style={{height: '100%'}} />
                 </View>
             }
 

@@ -30,26 +30,26 @@ const ExtratoPontosScreen = props => {
     const { estabelecimento_id, estabelecimento_nome } = props.route?.params;
 
     useEffect(() => {
-        const carregarExtrato = () => {
-            setCarregando(true);
-            api.get('/movimentacoes', {
-                params: {
-                    page,
-                    estabelecimento_id
-                }
-            })
-                .then((response) => {
-                    setCarregando(false);
-                    setExtratoLista(response.data.movimentacoes);
-                    setSaldoAtual(response.data.total_pontos)
-                })
-                .catch((error) => {
-                    setCarregando(false);
-                });
-        };
-
         carregarExtrato();
     }, []);
+
+    const carregarExtrato = () => {
+        setCarregando(true);
+        api.get('/movimentacoes', {
+            params: {
+                page,
+                estabelecimento_id
+            }
+        })
+            .then((response) => {
+                setCarregando(false);
+                setExtratoLista(response.data.movimentacoes);
+                setSaldoAtual(response.data.total_pontos)
+            })
+            .catch((error) => {
+                setCarregando(false);
+            });
+    };
 
     const renderItem = (item) => {
         return (
@@ -88,8 +88,11 @@ const ExtratoPontosScreen = props => {
                 </View>
                 <FlatList
                     data={extratoLista}
+                    refreshing={false}
+                    onRefresh={() => carregarExtrato()}
                     keyExtractor={(item) => item.id.toString()}
-                    renderItem={({ item }) => renderItem(item)} />
+                    renderItem={({ item }) => renderItem(item)}
+                    style={{height: '100%'}} />
             </View>
         </Page>
     );

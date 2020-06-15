@@ -56,6 +56,7 @@ const ResgatesScreen = props => {
                     onRefresh={() => carregarResgates()}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => renderItem(item)}
+                    style={{height: '100%'}}
                 />
             )
         }

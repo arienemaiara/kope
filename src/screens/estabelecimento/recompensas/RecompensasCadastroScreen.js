@@ -99,8 +99,9 @@ const RecompensasCadastroScreen = props => {
                     props.navigation.goBack();
                 })
                 .catch((error) => {
-                    Alert.alert('Erro', error.data.error);
-                    console.tron.log(error.data.error);
+                    console.log(error)
+                    Alert.alert('Erro', error.data?.error);
+                    console.tron.log(error.data?.error);
                 });
         }
     };
@@ -136,7 +137,7 @@ const RecompensasCadastroScreen = props => {
                     <HeaderButton iconName='save' onPress={() => formRef.current.handleSubmit()} />
                 }>
                 <View style={styles.container}>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <ImagemPreview imagem_url={image ? image : 'null'} />
                         <ButtonTransparent 
                             title={image ? 'Alterar imagem' : 'Selecione uma imagem'}
@@ -211,6 +212,8 @@ const RecompensasCadastroScreen = props => {
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        justifyContent: 'flex-start',
         padding: 20
     }
 });

@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, createRef, useContext, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, ScrollView, Alert, StyleSheet } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
@@ -21,7 +21,6 @@ import EnderecoList from '../../components/estabelecimento/EnderecoList';
 import * as EstabelecimentoService from '../../services/estabelecimento';
 import ImagemPreview from '../../components/ImagemPreview';
 
-import AuthContext from '../../contexts/auth';
 
 import { validationShapeCadastro } from '../../utils/validationShape';
 
@@ -158,15 +157,15 @@ const CadastroScreen = props => {
                     type:'image/jpg'
                 });
             }
-            
+             
             if (editMode === false) {
                 cadastrarEstabelecimento(formData);
             }
             else {
                 editarEstabelecimento(formData);
-            }
-        }
-    }
+            } 
+        } 
+    } 
 
     const cadastrarEstabelecimento = (formData) => {
         EstabelecimentoService.cadastrar(formData)
@@ -240,146 +239,149 @@ const CadastroScreen = props => {
 
                 <Spinner visible={carregando} />
 
-                <View style={styles.container}>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
-                        <ImagemPreview imagem_url={image ? image : 'null'} />
-                        <ButtonTransparent 
-                            title={image ? 'Alterar imagem' : 'Selecione uma imagem'}
-                            onPress={pickImage}
-                            color={Colors.pinkText} />
+                <ScrollView>
+
+                    <View style={styles.container}>
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+                            <ImagemPreview imagem_url={image ? image : 'null'} />
+                            <ButtonTransparent 
+                                title={image ? 'Alterar imagem' : 'Selecione uma imagem'}
+                                onPress={pickImage}
+                                color={Colors.pinkText} />
+                        </View>
+
+                        <Formik
+                            initialValues={initialValues}
+                            enableReinitialize={true}
+                            onSubmit={values => handleSave(values)}
+                            validationSchema={validationSchema}
+                            innerRef={formRef}
+                        >
+                            {({
+                                handleChange,
+                                values,
+                                errors,
+                                handleBlur,
+                                touched,
+                                handleSubmit
+                            }) => (
+                                    <Fragment>
+                                        <View>
+                                            <Label>CPF/CNPJ</Label>
+                                            <MaskedInput
+                                                type={mascaraCpfCnpj}
+                                                placeholder="Digite seu CPF ou CNPJ"
+                                                keyboardType="numeric"
+                                                returnKeyType="next"
+                                                value={values.cpf_cnpj}
+                                                onChange={() => verificarMascaraCpfCnpj()}
+                                                onChangeText={handleChange('cpf_cnpj')}
+                                                onBlur={handleBlur('cpf_cnpj')}
+                                                editable={!editMode}
+                                                ref={(ref) => cpfInputRef = ref}
+                                                style={touched.cpf_cnpj && errors.cpf_cnpj ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }} />
+
+                                            <ErrorMessage errorValue={touched.cpf_cnpj && errors.cpf_cnpj} />
+                                        </View>
+                                        <View>
+                                            <Label>Nome</Label>
+                                            <FormInput
+                                                placeholder="Digite seu nome"
+                                                autoCorrect={false}
+                                                returnKeyType="next"
+                                                value={values.nome}
+                                                onChangeText={handleChange('nome')}
+                                                onBlur={handleBlur('nome')}
+                                                style={touched.nome && errors.nome ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }}
+                                            />
+                                            <ErrorMessage errorValue={touched.nome && errors.nome} />
+                                        </View>
+                                        <View>
+                                            <Label>E-mail</Label>
+                                            <FormInput
+                                                placeholder="Digite seu e-mail"
+                                                autoCapitalize="none"
+                                                keyboardType="email-address"
+                                                returnKeyType="next"
+                                                value={values.email}
+                                                onChangeText={handleChange('email')}
+                                                onBlur={handleBlur('email')}
+                                                style={touched.email && errors.email ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }}
+                                            />
+                                            <ErrorMessage errorValue={touched.email && errors.email} />
+                                        </View>
+                                        <View>
+                                            <Label>Telefone</Label>
+                                            <MaskedInput
+                                                type='cel-phone'
+                                                placeholder="Digite seu telefone"
+                                                keyboardType="numeric"
+                                                returnKeyType="next"
+                                                value={values.telefone}
+                                                onChangeText={handleChange('telefone')}
+                                                onBlur={handleBlur('telefone')}
+                                                ref={(ref) => telefoneInputRef = ref}
+                                                style={touched.telefone && errors.telefone ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }} />
+
+                                            <ErrorMessage errorValue={touched.telefone && errors.telefone} />
+                                        </View>
+                                        {!editMode &&
+                                            <>
+                                                <View>
+                                                    <Label>Senha</Label>
+                                                    <FormInput
+                                                        placeholder="Digite sua senha"
+                                                        secureTextEntry={true}
+                                                        textContentType="password"
+                                                        returnKeyType="next"
+                                                        value={values.password}
+                                                        onChangeText={handleChange('password')}
+                                                        onBlur={handleBlur('password')}
+                                                        style={touched.password && errors.password ?
+                                                            { borderBottomColor: 'red' }
+                                                            : { borderBottomColor: Colors.inputBorderBottom }}
+                                                    />
+                                                    <ErrorMessage errorValue={touched.password && errors.password} />
+                                                </View>
+
+                                                <View>
+                                                    <Label>Confirmar senha</Label>
+                                                    <FormInput
+                                                        placeholder="Confirme a senha"
+                                                        secureTextEntry={true}
+                                                        textContentType="password"
+                                                        returnKeyType="send"
+                                                        value={values.confirmPassword}
+                                                        onChangeText={handleChange('confirmPassword')}
+                                                        onBlur={handleBlur('confirmPassword')}
+                                                        onSubmitEditing={handleSubmit}
+                                                        style={touched.confirmPassword && errors.confirmPassword ?
+                                                            { borderBottomColor: 'red' }
+                                                            : { borderBottomColor: Colors.inputBorderBottom }}
+                                                    />
+                                                    <ErrorMessage errorValue={touched.confirmPassword && errors.confirmPassword} />
+                                                </View>
+                                            </>
+                                        }
+                                    </Fragment>
+                                )}
+                        </Formik>
                     </View>
-
-                    <Formik
-                        initialValues={initialValues}
-                        enableReinitialize={true}
-                        onSubmit={values => handleSave(values)}
-                        validationSchema={validationSchema}
-                        innerRef={formRef}
-                    >
-                        {({
-                            handleChange,
-                            values,
-                            errors,
-                            handleBlur,
-                            touched,
-                            handleSubmit
-                        }) => (
-                                <Fragment>
-                                    <View>
-                                        <Label>CPF/CNPJ</Label>
-                                        <MaskedInput
-                                            type={mascaraCpfCnpj}
-                                            placeholder="Digite seu CPF ou CNPJ"
-                                            keyboardType="numeric"
-                                            returnKeyType="next"
-                                            value={values.cpf_cnpj}
-                                            onChange={() => verificarMascaraCpfCnpj()}
-                                            onChangeText={handleChange('cpf_cnpj')}
-                                            onBlur={handleBlur('cpf_cnpj')}
-                                            editable={!editMode}
-                                            ref={(ref) => cpfInputRef = ref}
-                                            style={touched.cpf_cnpj && errors.cpf_cnpj ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }} />
-
-                                        <ErrorMessage errorValue={touched.cpf_cnpj && errors.cpf_cnpj} />
-                                    </View>
-                                    <View>
-                                        <Label>Nome</Label>
-                                        <FormInput
-                                            placeholder="Digite seu nome"
-                                            autoCorrect={false}
-                                            returnKeyType="next"
-                                            value={values.nome}
-                                            onChangeText={handleChange('nome')}
-                                            onBlur={handleBlur('nome')}
-                                            style={touched.nome && errors.nome ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.nome && errors.nome} />
-                                    </View>
-                                    <View>
-                                        <Label>E-mail</Label>
-                                        <FormInput
-                                            placeholder="Digite seu e-mail"
-                                            autoCapitalize="none"
-                                            keyboardType="email-address"
-                                            returnKeyType="next"
-                                            value={values.email}
-                                            onChangeText={handleChange('email')}
-                                            onBlur={handleBlur('email')}
-                                            style={touched.email && errors.email ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.email && errors.email} />
-                                    </View>
-                                    <View>
-                                        <Label>Telefone</Label>
-                                        <MaskedInput
-                                            type='cel-phone'
-                                            placeholder="Digite seu telefone"
-                                            keyboardType="numeric"
-                                            returnKeyType="next"
-                                            value={values.telefone}
-                                            onChangeText={handleChange('telefone')}
-                                            onBlur={handleBlur('telefone')}
-                                            ref={(ref) => telefoneInputRef = ref}
-                                            style={touched.telefone && errors.telefone ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }} />
-
-                                        <ErrorMessage errorValue={touched.telefone && errors.telefone} />
-                                    </View>
-                                    {!editMode &&
-                                        <>
-                                            <View>
-                                                <Label>Senha</Label>
-                                                <FormInput
-                                                    placeholder="Digite sua senha"
-                                                    secureTextEntry={true}
-                                                    textContentType="password"
-                                                    returnKeyType="next"
-                                                    value={values.password}
-                                                    onChangeText={handleChange('password')}
-                                                    onBlur={handleBlur('password')}
-                                                    style={touched.password && errors.password ?
-                                                        { borderBottomColor: 'red' }
-                                                        : { borderBottomColor: Colors.inputBorderBottom }}
-                                                />
-                                                <ErrorMessage errorValue={touched.password && errors.password} />
-                                            </View>
-
-                                            <View>
-                                                <Label>Confirmar senha</Label>
-                                                <FormInput
-                                                    placeholder="Confirme a senha"
-                                                    secureTextEntry={true}
-                                                    textContentType="password"
-                                                    returnKeyType="send"
-                                                    value={values.confirmPassword}
-                                                    onChangeText={handleChange('confirmPassword')}
-                                                    onBlur={handleBlur('confirmPassword')}
-                                                    onSubmitEditing={handleSubmit}
-                                                    style={touched.confirmPassword && errors.confirmPassword ?
-                                                        { borderBottomColor: 'red' }
-                                                        : { borderBottomColor: Colors.inputBorderBottom }}
-                                                />
-                                                <ErrorMessage errorValue={touched.confirmPassword && errors.confirmPassword} />
-                                            </View>
-                                        </>
-                                    }
-                                </Fragment>
-                            )}
-                    </Formik>
-                </View>
-                <View>
-                    <EnderecoList
-                        enderecos={initialValues.enderecos}
-                        ref={enderecoListRef}
-                    />
-                </View>
+                    <View>
+                        <EnderecoList
+                            enderecos={initialValues.enderecos}
+                            ref={enderecoListRef}
+                        />
+                    </View>
+                </ScrollView>
             </Page>
         </Container>
     );

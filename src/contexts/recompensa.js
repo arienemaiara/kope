@@ -50,7 +50,7 @@ export const RecompensaProvider = ({ children }) => {
     const alterarRecompensa = (id, formData) => {
         setLoading(true);
         return new Promise((resolve, reject) => {
-            ApplicationCache.put('/recompensas/' + id, formData)
+            api.put('/recompensas/' + id, formData)
                 .then((response) => {
                     carregarRecompensas();
                     setLoading(false);

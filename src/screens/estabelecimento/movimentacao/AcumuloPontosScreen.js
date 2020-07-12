@@ -132,6 +132,7 @@ const AcumuloPontosScreen = props => {
                     <FormInput
                         placeholder="Quantidade de pontos"
                         returnKeyType="send"
+                        keyboardType="numeric"
                         autoFocus={true}
                         value={qtdPontos}
                         onChangeText={(value) => setQtdPontos(value)}

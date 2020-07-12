@@ -21,7 +21,7 @@ const App = (props) => {
 				// Load fonts
 				await Font.loadAsync({
 					...Ionicons.font,
-					'circular-std': require('./assets/fonts/CircularStd-Book.ttf'),
+					'varela-round': require('./assets/fonts/VarelaRound-Regular.ttf'),
 				});
 			} catch (e) {
 				console.warn(e);

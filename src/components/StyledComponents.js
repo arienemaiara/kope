@@ -8,7 +8,7 @@ import Colors from '../constants/Colors';
 
 //------------------- TEXTS ----------------------
 export const DefaultText = styled.Text`
-    font-family: 'circular-std';
+    font-family: 'varela-round';
     font-size: ${props => props.fontSize ? props.fontSize + 'px' : '16px'};
     color: ${props => props.color ? props.color : Colors.defaultText};
     margin: 2px;
@@ -53,7 +53,7 @@ export const ButtonContainer = styled.TouchableOpacity`
 
 const ButtonText = styled.Text`
     font-size: 18px;
-    font-family: 'circular-std';
+    font-family: 'varela-round';
     text-transform: uppercase;
     color: white;
     text-align: center;
@@ -73,7 +73,7 @@ export const ButtonTransparentContainer = styled.TouchableOpacity`
 `;
 
 export const ButtonTransparentText = styled.Text`
-    font-family: 'circular-std';
+    font-family: 'varela-round';
     color: ${props => props.color ? props.color : Colors.defaultText};
     text-align: center;
     font-size: ${props => props.titleSize ? props.titleSize + 'px' : '16px'};
@@ -156,9 +156,11 @@ export const ItemLista = styled.TouchableOpacity`
     align-items: flex-start;
 `;
 
-export const ShadowBox = styled.View`
+export const CPFManual = styled.View`
     border-radius: 5px; 
     padding: 10px;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.27);
     background-color: #fff;
+    padding: 20px;
+    margin: 10px;
 `;

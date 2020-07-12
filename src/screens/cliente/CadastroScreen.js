@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useContext, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { View, Alert, StyleSheet } from 'react-native';
+import { View, ScrollView, Alert, StyleSheet } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import Page from '../../components/Page';
@@ -85,7 +85,6 @@ const CadastroScreen = props => {
         else {
             cadastrarCliente(formData);
         }
-
     };
 
     const cadastrarCliente = (formData) => {
@@ -148,7 +147,7 @@ const CadastroScreen = props => {
 
                 <Spinner visible={carregando} />
 
-                <View style={styles.container}>
+                <ScrollView style={styles.container}>
                 
                     <Formik
                         initialValues={initialValues}
@@ -276,7 +275,7 @@ const CadastroScreen = props => {
                             </Fragment>
                         )}
                     </Formik>
-                </View>
+                </ScrollView>
             </Page>
         </Container>
     );

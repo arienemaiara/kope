@@ -10,7 +10,7 @@ const ErrorMessage = ({ errorValue }) => (
 const styles = StyleSheet.create({
     errorText: {
         color: 'red',
-        fontFamily: 'circular-std'
+        fontFamily: 'varela-round'
     }
 })
 

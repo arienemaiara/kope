@@ -66,7 +66,7 @@ export default BottomTabNavigator = ({ navigation, route }) => {
                 activeTintColor: Colors.tintColor,
                 labelStyle: {
                     fontSize: 14,
-                    fontFamily: 'circular-std'
+                    fontFamily: 'varela-round'
                 },
                 style: {
                     height: isIphoneX() ? 90 : 60

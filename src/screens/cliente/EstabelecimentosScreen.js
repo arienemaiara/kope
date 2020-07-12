@@ -118,7 +118,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
         <Page 
             title='Estabelecimentos Participantes'>
             <Spinner visible={carregando} />
-            <View style={styles.buscar}>
+            {/* <View style={styles.buscar}>
                 <Feather
                     name="search"
                     style={styles.buscarIcon}
@@ -126,7 +126,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
                 <DefaultInput
                     placeholder="Procurar estabelecimento"
                     style={styles.buscarText} />
-            </View>
+            </View> */}
             { renderLista() }
         </Page>
     );

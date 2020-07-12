@@ -5,13 +5,14 @@ import {
     TouchableOpacity,
     Text, 
     Alert, 
+    Keyboard,
     StyleSheet 
 } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 import Page from '../../components/Page';
 import {
-    ShadowBox,
+    CPFManual,
     Label,
     MaskedInput,
     ButtonTransparent,
@@ -47,6 +48,7 @@ const LerQRCodeScreen = props => {
             Alert.alert('Erro', 'Informe o CPF do cliente para prosseguir.');
         }
         else {
+            Keyboard.dismiss();
             if (acumuloPontos) {
                 acumularPontosCliente(cpf);
             }
@@ -83,7 +85,7 @@ const LerQRCodeScreen = props => {
                     />
                 </View>
                 : 
-                <ShadowBox>
+                <CPFManual>
                     <Label>CPF</Label>
                     <MaskedInput
                         type="cpf"
@@ -96,9 +98,10 @@ const LerQRCodeScreen = props => {
                     <DefaultButton
                         title="Confirmar"
                         backgroundColor={Colors.bgBtnSuccess}
+                        style={{marginTop: 15}}
                         onPress={() => confirmarCPFCliente(cpfInputRef.getRawValue()) }
                     />
-                </ShadowBox>
+                </CPFManual>
             }
             <View style={styles.buttonGroup}>
                 <ButtonTransparent 

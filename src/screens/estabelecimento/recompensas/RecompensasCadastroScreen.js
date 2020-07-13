@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useEffect, useState, useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { View, ScrollView, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert } from 'react-native';
+import { View, SafeAreaView, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 
@@ -127,17 +127,19 @@ const RecompensasCadastroScreen = props => {
     }
 
     return (
-        
-            <Page
-                title={title}
-                headerBackButton={
-                    <HeaderButton iconName='arrow-left' onPress={onBackHandler} />
-                }
-                headerRightButton={
-                    <HeaderButton iconName='save' onPress={() => formRef.current.handleSubmit()} />
-                }>
+
+        <Page
+            title={title}
+            headerBackButton={
+                <HeaderButton iconName='arrow-left' onPress={onBackHandler} />
+            }
+            headerRightButton={
+                <HeaderButton iconName='save' onPress={() => formRef.current.handleSubmit()} />
+            }>
+            <Container>
+            <SafeAreaView style={styles.container}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                    <Container style={styles.container}>
+                    <View style={styles.inner}>
                         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                             <ImagemPreview imagem_url={image} />
                             <ButtonTransparent
@@ -203,20 +205,29 @@ const RecompensasCadastroScreen = props => {
                                 />
                                 : null
                         }
-                        
-                    </Container>
+                        <View style={{ flex : 1 }} />
+                    </View>
                 </TouchableWithoutFeedback>
-            </Page>
-     
+            </SafeAreaView>
+            </Container>
+        </Page>
+
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
-        justifyContent: 'flex-start',
-        padding: 20,
-    }
+        flex: 1,
+        // justifyContent: 'flex-start',
+        // padding: 20,
+    },
+    inner: {
+        paddingBottom: 100,
+        paddingHorizontal: 20,
+        marginTop: 10,
+        flex: 1,
+        justifyContent: "flex-end",
+    },
 });
 
 export default RecompensasCadastroScreen;

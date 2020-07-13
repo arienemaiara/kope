@@ -26,7 +26,19 @@ export const RecompensaProvider = ({ children }) => {
                 estabelecimento_id: user.id
             }
         })
-        .then((response) => setRecompensasLista(response.data))
+        .then((response) => {
+            if (page = 1) {
+                setRecompensasLista(response.data)
+            }
+            else {
+                if (response.data.length > 0) {
+                    setRecompensasLista([...recompensasLista, ...response.data])
+                }
+                else {
+                    setRecompensasLista([...recompensasLista])
+                }
+            }
+        })
         .finally(() => setLoading(false));
     };
 

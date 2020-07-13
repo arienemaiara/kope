@@ -52,11 +52,11 @@ const RecompensasListaScreen = props => {
                     onRefresh={() => carregarRecompensas(1)}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <RecompensaItem item={item} onPress={() => onItemPressHandler(item)} />}
-                    onEndReached={() => {
-                        carregarRecompensas(page + 1)
-                        setPage(page + 1)
-                    }}
-                    onEndReachedThreshold={0.2}
+                    // // onEndReached={() => {
+                    // //     carregarRecompensas(page + 1)
+                    // //     setPage(page + 1)
+                    // // }}
+                    // // onEndReachedThreshold={0.2}
                 />
             )
         }

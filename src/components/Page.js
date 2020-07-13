@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 0,
         left: 0,
-        right: 0
+        right: 0,
+        zIndex: 5
     },
     headerContainer: {
         flex: 1,
@@ -59,6 +60,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'center',
+        
     },
     pageContent: {
         flex: 1,

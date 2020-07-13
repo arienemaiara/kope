@@ -92,7 +92,7 @@ const ExtratoPontosScreen = props => {
                     onRefresh={() => carregarExtrato()}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => renderItem(item)}
-                    style={{height: '100%'}} />
+                    style={{marginBottom: 80}} />
             </View>
         </Page>
     );
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end'
     },  
     saldoInfo: {
-        paddingVertical: 15,
+        paddingVertical: 10,
         justifyContent: 'center',
         alignItems: 'center',
         borderBottomColor: Colors.listSeparator,

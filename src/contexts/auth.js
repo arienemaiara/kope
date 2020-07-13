@@ -66,6 +66,7 @@ export const AuthProvider = ({ children }) => {
         AsyncStorage.clear().then(() => {
             setUser(null);
         });
+        api.defaults.headers['Authorization'] = null;
     }
 
     return (

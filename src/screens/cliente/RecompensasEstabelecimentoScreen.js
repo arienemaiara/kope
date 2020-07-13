@@ -63,12 +63,15 @@ const RecompensasEstabelecimentoScreen = (props) => {
                         onPress={() => { 
                             props.navigation.navigate('EstabelecimentoDetalhe', { estabelecimento, endereco } ) 
                         }}>
-                        Ver mais informações >
+                        Ver mais informações &gt;
                     </DefaultText>
                 </View>
             </View>
             <View style={{justifyContent: 'center'}}>
-                <SubTitle color={Colors.greenText}>Produtos disponíveis para regaste</SubTitle>
+                <View style={styles.subtitulo}>
+                    <SubTitle color={Colors.greenText}>Produtos disponíveis para regaste</SubTitle>
+                </View>
+                
                 { renderLista() }
             </View>
         </Page>
@@ -82,6 +85,10 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         paddingVertical: 20,
+    },
+    subtitulo: {
+        borderBottomColor: Colors.listSeparator,
+        borderBottomWidth: 1
     }
 });
 

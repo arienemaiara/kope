@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
 import { SplashScreen } from 'expo';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -39,10 +38,7 @@ const App = (props) => {
 	} else {
 		return (
 			<AuthProvider>
-				{/* <StatusBar barStyle="dark-content" />
-				<SafeAreaView style={{ flex: 1 }}> */}
-					<MainNavigator />
-				{/* </SafeAreaView> */}
+				<MainNavigator />
 			</AuthProvider>
 		)
 	}

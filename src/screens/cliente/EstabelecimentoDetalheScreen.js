@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Feather } from '@expo/vector-icons';
 
@@ -34,36 +34,38 @@ const EstabelecimentoDetalheScreen = (props) => {
                     iconName='arrow-left'
                     onPress={() => props.navigation.goBack()} />
             }>
-            <View>
-                <MapView
-                    style={{height: 300}}
-                    initialRegion={coordenadasMapa}
-                >
-                    <Marker
-                        coordinate={makerCoordenada}
-                        title={estabelecimento.nome}
-                    ></Marker>
-                </MapView>
-            </View>
-            <View style={styles.enderecoInfo}>
-                <SubTitle color={Colors.pinkText}>Informações</SubTitle>
-                <Row padding={10}>
-                    <Feather name='map-pin' style={styles.enderecoIcon} />
-                    <Column>
-                        <DefaultText>{endereco.endereco}, {endereco.numero}</DefaultText>
-                        <DefaultText>{endereco.bairro}</DefaultText>
-                        <DefaultText>{endereco.cidade} - {endereco.estado}</DefaultText>
-                    </Column>
-                </Row>
-                <Row padding={10}>
-                    <Feather name='mail' style={styles.enderecoIcon} />
-                    <DefaultText>{estabelecimento.email}</DefaultText>
-                </Row>
-                <Row padding={10}>
-                    <Feather name='phone' style={styles.enderecoIcon} />
-                    <DefaultText>{estabelecimento.telefone}</DefaultText>
-                </Row>
-            </View>
+            <ScrollView>
+                <View>
+                    <MapView
+                        style={{height: 300}}
+                        initialRegion={coordenadasMapa}
+                    >
+                        <Marker
+                            coordinate={makerCoordenada}
+                            title={estabelecimento.nome}
+                        ></Marker>
+                    </MapView>
+                </View>
+                <View style={styles.enderecoInfo}>
+                    <SubTitle color={Colors.pinkText}>Informações</SubTitle>
+                    <Row padding={10}>
+                        <Feather name='map-pin' style={styles.enderecoIcon} />
+                        <Column>
+                            <DefaultText>{endereco.endereco}, {endereco.numero}</DefaultText>
+                            <DefaultText>{endereco.bairro}</DefaultText>
+                            <DefaultText>{endereco.cidade} - {endereco.estado}</DefaultText>
+                        </Column>
+                    </Row>
+                    <Row padding={10}>
+                        <Feather name='mail' style={styles.enderecoIcon} />
+                        <DefaultText>{estabelecimento.email}</DefaultText>
+                    </Row>
+                    <Row padding={10}>
+                        <Feather name='phone' style={styles.enderecoIcon} />
+                        <DefaultText>{estabelecimento.telefone}</DefaultText>
+                    </Row>
+                </View>
+            </ScrollView>
         </Page>
     );
 };

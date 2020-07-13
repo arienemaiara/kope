@@ -70,9 +70,10 @@ const PontosScreen = ({ navigation }) => {
                 <SemRegistros message="Você ainda não pontuou em nenhum estabelecimento." />
                 :
                 <View>
-                    <InfoText style={styles.infoText}>
-                        Selecione o estabelecimento para ver seu extrato
-                    </InfoText>
+                    <View style={styles.infoText}>
+                        <InfoText style={{textAlign: 'center'}}>Selecione o estabelecimento para ver seu extrato</InfoText>
+                    </View>
+                    
                     <FlatList
                         data={pontosLista}
                         refreshing={false}
@@ -90,8 +91,9 @@ const PontosScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     infoText: {
         textAlign: 'center',
-        fontSize: 16,
-        padding: 30
+        padding: 30,
+        borderBottomColor: Colors.listSeparator,
+        borderBottomWidth: 1
     },
     pontosText: {
         color: Colors.greenText,

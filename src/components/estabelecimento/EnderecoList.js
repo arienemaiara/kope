@@ -7,6 +7,8 @@ import {
     StyleSheet
 } from 'react-native';
 import { Formik, Form, Field, FieldArray, getIn } from 'formik';
+import cep from 'cep-promise'
+
 import {
     Container,
     Row,
@@ -19,6 +21,7 @@ import {
 import IconButton from '../IconButton';
 import ErrorMessage from '../ErrorMessage';
 import Colors from '../../constants/Colors';
+
 
 const EnderecoList = (props, ref) => {
 
@@ -70,6 +73,17 @@ const EnderecoList = (props, ref) => {
         </Field>
     );
 
+    const handleCepChange = (index, cepValue, setFieldValue) => {
+        cep(cepValue)
+            .then((data) => {
+                setFieldValue(`enderecos[${index}].endereco`, data.street, true);
+                setFieldValue(`enderecos[${index}].bairro`, data.neighborhood, true);
+                setFieldValue(`enderecos[${index}].cidade`, data.city, true);
+                setFieldValue(`enderecos[${index}].estado`, data.state, true);
+            })
+            .catch(() => alert('CEP não encontrado.'))
+    }
+
     const handleSave = (values) => {
         
     }
@@ -88,6 +102,7 @@ const EnderecoList = (props, ref) => {
                 handleChange,
                 handleBlur,
                 handleSubmit,
+                setFieldValue
             }) => (
                     <FieldArray
                         name="enderecos"
@@ -105,9 +120,13 @@ const EnderecoList = (props, ref) => {
                                                     placeholder="CEP"
                                                     autoCorrect={false}
                                                     returnKeyType="next"
+                                                    keyboardType="numeric"
                                                     value={values.enderecos[index].cep}
                                                     onChangeText={handleChange(`enderecos[${index}].cep`)}
-                                                    onBlur={handleBlur(`enderecos[${index}].cep`)}
+                                                    onBlur={() => { 
+                                                        handleBlur(`enderecos[${index}].cep`); 
+                                                        handleCepChange(index, values.enderecos[index].cep, setFieldValue) 
+                                                    }}
                                                     style={renderBorderColor(errors, touched, `enderecos[${index}].cep`)}
                                                 />
                                                 <Validation name={`enderecos[${index}].cep`} />

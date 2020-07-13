@@ -113,7 +113,9 @@ const CadastroScreen = props => {
     };
 
     const verificarMascaraCpfCnpj = (cpf_cnpj) => {
-        const len = cpf_cnpj ? cpf_cnpj.length : cpfInputRef.getRawValue().length;
+        console.tron.log(cpfInputRef.getRawValue())
+        const len = cpf_cnpj?.length || cpfInputRef.getRawValue().length;
+        console.tron.log(len)
         if (len <= 11) {
             setMascaraCpfCnpj('cpf');
         }
@@ -274,7 +276,7 @@ const CadastroScreen = props => {
                                                 keyboardType="numeric"
                                                 returnKeyType="next"
                                                 value={values.cpf_cnpj}
-                                                onChange={() => verificarMascaraCpfCnpj()}
+                                                onChange={() => verificarMascaraCpfCnpj(values.cpf_cnpj)}
                                                 onChangeText={handleChange('cpf_cnpj')}
                                                 onBlur={handleBlur('cpf_cnpj')}
                                                 editable={!editMode}

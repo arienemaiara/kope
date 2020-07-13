@@ -15,7 +15,7 @@ import RecompensaContext from '../../../contexts/recompensa';
 const RecompensasListaScreen = props => {
 
     const [recompensas, setRecompensas] = useState();
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const [loadingList, setLoadingList] = useState(true);
     const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -23,7 +23,7 @@ const RecompensasListaScreen = props => {
     const { recompensasLista, carregarRecompensas, loading } = useContext(RecompensaContext);
 
     useEffect(() => {
-        carregarRecompensas(1);
+        carregarRecompensas(page + 1);
     }, []);
 
     useEffect(() => {
@@ -49,9 +49,14 @@ const RecompensasListaScreen = props => {
                 <FlatList
                     data={recompensas}
                     refreshing={false}
-                    onRefresh={() => console.tron.log('refreshin')}
+                    onRefresh={() => carregarRecompensas(1)}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={({ item }) => <RecompensaItem item={item} onPress={() => onItemPressHandler(item)} />}
+                    onEndReached={() => {
+                        carregarRecompensas(page + 1)
+                        setPage(page + 1)
+                    }}
+                    onEndReachedThreshold={0.2}
                 />
             )
         }

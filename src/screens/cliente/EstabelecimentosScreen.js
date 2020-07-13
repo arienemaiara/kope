@@ -100,7 +100,7 @@ const EstabelecimentosScreen = ({ navigation }) => {
                     navigation.navigate('RecompensasEstabelecimento', { estabelecimento, endereco: item }) 
                 }}>
                 <Row>
-                    <AvatarImagem imagem_url={estabelecimento.avatar_url} />
+                    <AvatarImagem imagem_url={estabelecimento.avatar_path} />
                     <Column>
                         <ListText>{estabelecimento.nome}</ListText>
                         {

@@ -16,7 +16,7 @@ const ConfiguracoesScreen = ({ navigation }) => {
     return (
         <Page title="Configurações">
             <View style={styles.userInfo}>
-                <ImagemPreview imagem_url={user.avatar_url && !user.avatar_url.includes('null') ? user.avatar_url : 'null'} />
+                <ImagemPreview imagem_url={user.avatar_path} />
                 <DefaultText fontSize={18} color={Colors.purpleText} style={styles.userName}>{user.nome}</DefaultText>
             </View>
             <ItemLista

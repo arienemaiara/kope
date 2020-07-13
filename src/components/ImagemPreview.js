@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 const AvatarImagem = ({ imagem_url, size }) => {
 
     const renderImagem = () => {
-        if (imagem_url.includes('null')) {
+        if (!imagem_url) {
             return <Feather name="image" size={42} color="#fff" />
         }
         else {
@@ -27,15 +27,15 @@ const styles = StyleSheet.create({
     imageContainer: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: 150,
-        height: 150,
+        width: 120,
+        height: 120,
         backgroundColor: Colors.grayBackground,
         borderRadius: 125,
         marginRight: 10,
     },
     image: {
-        width: 150, 
-        height: 150,
+        width: 120, 
+        height: 120,
         borderRadius: 125,
     }
 });

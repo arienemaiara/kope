@@ -11,7 +11,7 @@ const RecompensaItem = ({ item, onPress }) => {
         <ItemLista
             onPress={onPress}>
             <Row>
-                <AvatarImagem imagem_url={item.imagem_url} />
+                <AvatarImagem imagem_url={item.imagem_path} />
                 <Column>
                     <ListText>{item.descricao}</ListText>
                     <InfoText>{item.qtd_pontos} pts</InfoText>

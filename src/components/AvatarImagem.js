@@ -7,7 +7,7 @@ import Colors from '../constants/Colors';
 const AvatarImagem = ({ imagem_url }) => {
 
     const renderImagem = () => {
-        if (imagem_url.includes('null')) {
+        if (!imagem_url) {
             return <Feather name="image" size={26} color="#fff" />
         }
         else {

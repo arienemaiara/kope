@@ -75,8 +75,8 @@ const CadastroScreen = props => {
                 .then((response) => {
                     verificarMascaraCpfCnpj(response.data.cpf_cnpj);
                     setInitialValues(response.data);
-                    if (response.data.avatar_url && !response.data.avatar_url.includes('null')) {
-                        setImage(response.data.avatar_url);
+                    if (response.data.avatar_path && !response.data.avatar_url.includes('null')) {
+                        setImage(response.data.avatar_path);
                     }
                 })
                 .catch((error) => {

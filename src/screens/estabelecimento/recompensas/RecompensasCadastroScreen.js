@@ -1,7 +1,7 @@
 import React, { Fragment, useRef, useEffect, useState, useContext } from 'react';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, ScrollView, TouchableWithoutFeedback, Keyboard, StyleSheet, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Constants from 'expo-constants';
 
@@ -40,16 +40,16 @@ const RecompensasCadastroScreen = props => {
 
     useEffect(() => {
         (async () => {
-          if (Constants.platform.ios) {
-            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-            if (status !== 'granted') {
-                alert('É necessário permitir o acesso ao rolo da câmera.');
+            if (Constants.platform.ios) {
+                const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+                if (status !== 'granted') {
+                    alert('É necessário permitir o acesso ao rolo da câmera.');
+                }
             }
-          }
         })();
 
-        if (item?.imagem_url && !item?.imagem_url.includes('null')) {
-            setImage(item.imagem_url);
+        if (item?.imagem_path && !item?.imagem_path.includes('null')) {
+            setImage(item.imagem_path);
         }
     }, []);
 
@@ -60,7 +60,7 @@ const RecompensasCadastroScreen = props => {
             aspect: [4, 3],
             quality: 1,
         });
-        
+
         if (!result.cancelled) {
             setImage(result.uri);
         }
@@ -75,11 +75,11 @@ const RecompensasCadastroScreen = props => {
         const formData = new FormData();
         formData.append('descricao', values.descricao);
         formData.append('qtd_pontos', values.qtd_pontos);
-        if (image && image !== item?.imagem_url) {
+        if (image && image !== item?.imagem_path) {
             formData.append('file', {
                 uri: image,
                 name: 'recompensa.jpg',
-                type:'image/jpg'
+                type: 'image/jpg'
             });
         }
 
@@ -127,7 +127,7 @@ const RecompensasCadastroScreen = props => {
     }
 
     return (
-        <Container>
+        
             <Page
                 title={title}
                 headerBackButton={
@@ -136,85 +136,86 @@ const RecompensasCadastroScreen = props => {
                 headerRightButton={
                     <HeaderButton iconName='save' onPress={() => formRef.current.handleSubmit()} />
                 }>
-                <View style={styles.container}>
-                    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <ImagemPreview imagem_url={image ? image : 'null'} />
-                        <ButtonTransparent 
-                            title={image ? 'Alterar imagem' : 'Selecione uma imagem'}
-                            onPress={pickImage}
-                            color={Colors.pinkText} />
-                    </View>
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                    <Container style={styles.container}>
+                        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                            <ImagemPreview imagem_url={image} />
+                            <ButtonTransparent
+                                title={image ? 'Alterar imagem' : 'Selecione uma imagem'}
+                                onPress={pickImage}
+                                color={Colors.pinkText} />
+                        </View>
+                        <Formik
+                            initialValues={initialValues}
+                            onSubmit={values => handleSave(values)}
+                            validationSchema={validationSchema}
+                            style={styles.container}
+                            innerRef={formRef}
+                        >
+                            {({
+                                handleChange,
+                                values,
+                                errors,
+                                handleBlur,
+                                touched,
+                                handleSubmit
+                            }) => (
+                                    <Fragment>
+                                        <View>
+                                            <Label>Descrição</Label>
+                                            <FormInput
+                                                placeholder="Descrição da recompensa"
+                                                returnKeyType="next"
+                                                value={values.descricao}
+                                                onChangeText={handleChange('descricao')}
+                                                onBlur={handleBlur('descricao')}
+                                                style={touched.descricao && errors.descricao ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }}
+                                            />
+                                            <ErrorMessage errorValue={touched.descricao && errors.descricao} />
+                                        </View>
+                                        <View>
+                                            <Label>Quantidade de pontos</Label>
+                                            <FormInput
+                                                placeholder="Quantidade de pontos para resgate"
+                                                keyboardType="numeric"
+                                                value={values.qtd_pontos}
+                                                onChangeText={handleChange('qtd_pontos')}
+                                                onBlur={handleBlur('qtd_pontos')}
+                                                style={touched.qtd_pontos && errors.qtd_pontos ?
+                                                    { borderBottomColor: 'red' }
+                                                    : { borderBottomColor: Colors.inputBorderBottom }}
+                                            />
+                                            <ErrorMessage errorValue={touched.qtd_pontos && errors.qtd_pontos} />
+                                        </View>
+                                    </Fragment>
+                                )}
 
-                    <Formik
-                        initialValues={initialValues}
-                        onSubmit={values => handleSave(values)}
-                        validationSchema={validationSchema}
-                        style={styles.container}
-                        innerRef={formRef}
-                    >
-                        {({
-                            handleChange,
-                            values,
-                            errors,
-                            handleBlur,
-                            touched,
-                            handleSubmit
-                        }) => (
-                                <Fragment>
-                                    <View>
-                                        <Label>Descrição</Label>
-                                        <FormInput
-                                            placeholder="Descrição da recompensa"
-                                            returnKeyType="next"
-                                            value={values.descricao}
-                                            onChangeText={handleChange('descricao')}
-                                            onBlur={handleBlur('descricao')}
-                                            style={touched.descricao && errors.descricao ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.descricao && errors.descricao} />
-                                    </View>
-                                    <View>
-                                        <Label>Quantidade de pontos</Label>
-                                        <FormInput
-                                            placeholder="Quantidade de pontos para resgate"
-                                            keyboardType="numeric"
-                                            value={values.qtd_pontos}
-                                            onChangeText={handleChange('qtd_pontos')}
-                                            onBlur={handleBlur('qtd_pontos')}
-                                            style={touched.qtd_pontos && errors.qtd_pontos ?
-                                                { borderBottomColor: 'red' }
-                                                : { borderBottomColor: Colors.inputBorderBottom }}
-                                        />
-                                        <ErrorMessage errorValue={touched.qtd_pontos && errors.qtd_pontos} />
-                                    </View>
-                                </Fragment>
-                            )}
-
-                    </Formik>
-                    {
-                        editMode === true
-                            ? <ButtonTransparent
-                                title="Excluir recompensa"
-                                color={Colors.redText}
-                                titleSize={18}
-                                onPress={handleDelete}
-                            />
-                            : null
-                    }
-
-                </View>
+                        </Formik>
+                        {
+                            editMode === true
+                                ? <ButtonTransparent
+                                    title="Excluir recompensa"
+                                    color={Colors.redText}
+                                    titleSize={18}
+                                    onPress={handleDelete}
+                                />
+                                : null
+                        }
+                        
+                    </Container>
+                </TouchableWithoutFeedback>
             </Page>
-        </Container>
+     
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        // flex: 1,
         justifyContent: 'flex-start',
-        padding: 20
+        padding: 20,
     }
 });
 

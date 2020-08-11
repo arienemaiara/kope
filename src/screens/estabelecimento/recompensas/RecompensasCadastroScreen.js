@@ -218,8 +218,6 @@ const RecompensasCadastroScreen = props => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'flex-start',
-        // padding: 20,
     },
     inner: {
         paddingBottom: 100,
